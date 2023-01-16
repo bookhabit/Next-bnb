@@ -26,7 +26,6 @@ interface IProps {
 }
 
 const ModalPortal: React.FC<IProps> = ({ children, closePortal }) => {
-    console.log('Modal창 컴포넌트')
   const ref = useRef<Element | null>();
   const [mounted, setMounted] = useState(false);
 

@@ -35,7 +35,6 @@ const useModal = () => {
     }
 
     const ModalPortal: React.FC<IProps> = ({ children }) => {
-        console.log('Modal창 컴포넌트')
       const ref = useRef<Element | null>();
       const [mounted, setMounted] = useState(false);
     
