@@ -9,3 +9,13 @@ export type StoredUserType = {
     profileImage: string;
   };
   
+  // password값 지운 유저타입
+  export type UserType = {
+    id: number;
+    email: string;
+    firstname: string;
+    lastname: string;
+    birthday: string;
+    profileImage: string;
+  };
+  

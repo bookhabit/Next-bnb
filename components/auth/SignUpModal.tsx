@@ -11,6 +11,8 @@ import Selector from '../common/Selector';
 import { dayList, monthList, yearList } from '../../lib/staticData';
 import Button from '../common/Button';
 import { signupAPI } from '../../lib/api/auth';
+import { useDispatch } from 'react-redux';
+import { userActions } from '../../store/user';
 
 const Container = styled.form`
     width:568px;
@@ -92,6 +94,10 @@ const SignUpModal:React.FC = () => {
 
       const {birthMonth,birthDay,birthYear} = selectInputs;
 
+
+      // 새로운 유저 리덕스에 저장
+      const dispatch = useDispatch();
+
       const onChangeBirthSelector = (event:React.ChangeEvent<HTMLSelectElement>)=>{
         const { value, name } = event.target; // 우선 e.target 에서 name 과 value 를 추출
         setSelectInputs({
@@ -106,6 +112,7 @@ const SignUpModal:React.FC = () => {
         setHidePaddword(!hidePassword)
       }
 
+
       // 회원가입 폼 제출하는 함수
       const onSubmitSignUp = async (event:React.FormEvent<HTMLFormElement>)=>{
         event.preventDefault();
@@ -118,9 +125,11 @@ const SignUpModal:React.FC = () => {
                 password,
                 birthday: new Date(
                     `${birthYear}-${birthMonth!.replace("월", "")}-${birthDay}`
-                  ).toISOString(),
+                  ).toUTCString(),
             }
-            await signupAPI(signUpBody);
+            const {data} = await signupAPI(signUpBody);
+            console.log(data)
+            dispatch(userActions.setLoggedUser(data))
         }catch(e){
             console.log(e)
         }

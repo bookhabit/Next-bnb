@@ -17,7 +17,8 @@ export default async (req:NextApiRequest,res:NextApiResponse)=>{
         const userExist = Data.user.exist({email});
         if(userExist){
             res.statusCode = 409;
-            res.send("이미 가입된 이메일입니다.")
+            return res.send("이미 가입된 이메일입니다.")
+        
         }
 
         // 비밀번호 암호화
@@ -39,6 +40,7 @@ export default async (req:NextApiRequest,res:NextApiResponse)=>{
             profileImage:"defaultUserProfile"
         }
 
+        Data.user.write([...users,newUser])        
 
         // jwt 토큰 생성
         const token = jwt.sign(String(newUser.id),process.env.JWT_SECRET!)
@@ -49,9 +51,14 @@ export default async (req:NextApiRequest,res:NextApiResponse)=>{
             `access_token=${token};path=/;expires=${new Date(Date.now()+60+60*24*1000*3).toUTCString()};httponly`
         )
 
-        Data.user.write([...users,newUser])        
-        return res.end();
-        
+        // 비밀번호 제외한 유저정보를 저장할 변수 (타입지정)
+        const newUserWithoutPassword:Partial<Pick<StoredUserType,"password">>= newUser;
+
+        // delete 사용하여 객체의 속성제거
+        delete newUserWithoutPassword.password;
+
+        res.statusCode = 200;
+        return res.send(newUser);        
     }
     res.statusCode=405;
 
