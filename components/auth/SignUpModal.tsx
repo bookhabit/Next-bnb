@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import styled from 'styled-components';
 import CloseXIcon from "../../public/static/svg/modal_close_x_icon.svg"
-import MailIcon from "../../public/static/svg/mail.svg"
+import MailIcon from "../../public/static/svg/email.svg"
 import PersonIcon from "../../public/static/svg/person.svg"
 import OpenedEyeIcon from "../../public/static/svg/opened_eye.svg"
 import ClosedEyeIcon from "../../public/static/svg/closed_eye.svg"
@@ -10,6 +10,7 @@ import Input from '../common/Input';
 import Selector from '../common/Selector';
 import { dayList, monthList, yearList } from '../../lib/staticData';
 import Button from '../common/Button';
+import { signupAPI } from '../../lib/api/auth';
 
 const Container = styled.form`
     width:568px;
@@ -66,13 +67,13 @@ const SignUpModal:React.FC = () => {
 
     // input창 관리할 state
     const [inputs, setInputs] = useState({
-        mail: '',
-        first_name: '',
-        last_name:'',
+        email: '',
+        firstname: '',
+        lastname:'',
         password:'',
       });
 
-      const { mail,first_name,last_name,password} = inputs; // 비구조화 할당을 통해 값 추출
+      const { email,firstname,lastname,password} = inputs; // 비구조화 할당을 통해 값 추출
 
       const onChangeValue = (event:React.ChangeEvent<HTMLInputElement>) => {
         const { value, name } = event.target; // 우선 e.target 에서 name 과 value 를 추출
@@ -105,29 +106,50 @@ const SignUpModal:React.FC = () => {
         setHidePaddword(!hidePassword)
       }
 
+      // 회원가입 폼 제출하는 함수
+      const onSubmitSignUp = async (event:React.FormEvent<HTMLFormElement>)=>{
+        event.preventDefault();
+
+        try{
+            const signUpBody={
+                email,
+                lastname,
+                firstname,
+                password,
+                birthday: new Date(
+                    `${birthYear}-${birthMonth!.replace("월", "")}-${birthDay}`
+                  ).toISOString(),
+            }
+            await signupAPI(signUpBody);
+        }catch(e){
+            console.log(e)
+        }
+      }
+
+
     return (
-        <Container>
+        <Container onSubmit={onSubmitSignUp}>
             <CloseXIcon className="modal-close-x-icon"/>
             <div className='input-wrapper'>
-                <Input placeholder='이메일 주소' type='mail' 
-                name="mail"
-                value={mail}
+                <Input placeholder='이메일 주소' type='email' 
+                name="email"
+                value={email}
                 icon={<MailIcon/>}
                 onChange={onChangeValue}
                 />
             </div>
             <div className='input-wrapper'>
                 <Input placeholder='이름(예:길동)'
-                name="last_name"
-                value={last_name}
+                name="lastname"
+                value={lastname}
                 icon={<PersonIcon/>}
                 onChange={onChangeValue}
                 />
             </div>
             <div className='input-wrapper'>
                 <Input placeholder='성(예:홍)' 
-                name="first_name"
-                value={first_name}
+                name="firstname"
+                value={firstname}
                 icon={<PersonIcon/>}
                 onChange={onChangeValue}
                 />
@@ -139,7 +161,7 @@ const SignUpModal:React.FC = () => {
                 icon={hidePassword? (
                     <ClosedEyeIcon onClick={toggleHidePassword}/>
                 ):(
-                    <OpenedEyeIcon oClick={toggleHidePassword}/>
+                    <OpenedEyeIcon onClick={toggleHidePassword}/>
                     )}
                 onChange={onChangeValue}
                 />
