@@ -13,6 +13,8 @@ import Button from '../common/Button';
 import { signupAPI } from '../../lib/api/auth';
 import { useDispatch } from 'react-redux';
 import { userActions } from '../../store/user';
+import { commonActions } from '../../store/common';
+import useValidateMode from '../../hooks/useValidateMode';
 
 const Container = styled.form`
     width:568px;
@@ -94,7 +96,6 @@ const SignUpModal:React.FC = () => {
 
       const {birthMonth,birthDay,birthYear} = selectInputs;
 
-
       // 새로운 유저 리덕스에 저장
       const dispatch = useDispatch();
 
@@ -112,10 +113,17 @@ const SignUpModal:React.FC = () => {
         setHidePaddword(!hidePassword)
       }
 
+      const {setValidateMode}=useValidateMode();
 
       // 회원가입 폼 제출하는 함수
       const onSubmitSignUp = async (event:React.FormEvent<HTMLFormElement>)=>{
         event.preventDefault();
+
+        setValidateMode(true)
+
+        if(!email||!lastname||!firstname||!password){
+            return undefined;
+        }
 
         try{
             const signUpBody={
@@ -130,6 +138,7 @@ const SignUpModal:React.FC = () => {
             const {data} = await signupAPI(signUpBody);
             console.log(data)
             dispatch(userActions.setLoggedUser(data))
+            
         }catch(e){
             console.log(e)
         }
@@ -145,6 +154,9 @@ const SignUpModal:React.FC = () => {
                 value={email}
                 icon={<MailIcon/>}
                 onChange={onChangeValue}
+                useValidation
+                isValid={!!email}
+                errorMessage="이메일이 필요합니다"
                 />
             </div>
             <div className='input-wrapper'>
@@ -153,6 +165,9 @@ const SignUpModal:React.FC = () => {
                 value={lastname}
                 icon={<PersonIcon/>}
                 onChange={onChangeValue}
+                useValidation
+                isValid={!!lastname}
+                errorMessage="이름을 입력하세요"
                 />
             </div>
             <div className='input-wrapper'>
@@ -161,6 +176,9 @@ const SignUpModal:React.FC = () => {
                 value={firstname}
                 icon={<PersonIcon/>}
                 onChange={onChangeValue}
+                useValidation
+                isValid={!!firstname}
+                errorMessage="성을 입력하세요"
                 />
             </div>
             <div className='input-wrapper'>
@@ -173,6 +191,9 @@ const SignUpModal:React.FC = () => {
                     <OpenedEyeIcon onClick={toggleHidePassword}/>
                     )}
                 onChange={onChangeValue}
+                useValidation
+                isValid={!!password}
+                errorMessage="비밀번호를 입력하세요"
                 />
             </div>
 
