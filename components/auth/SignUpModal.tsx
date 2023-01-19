@@ -16,6 +16,7 @@ import { userActions } from '../../store/user';
 import { commonActions } from '../../store/common';
 import useValidateMode from '../../hooks/useValidateMode';
 import PasswordWarning from './PasswordWarning';
+import { useEffect } from 'react';
 
 const Container = styled.form`
     width:568px;
@@ -63,10 +64,27 @@ const Container = styled.form`
             width:33.3333%
         }
     }
+    .sign-up-modal-set-login-wrapper{
+        margin-top:8px;
+        border-top:1px solid ${palette.gray_eb};
+        p{
+            margin-top:8px;
+        }
+        .sign-up-modal-set-login{
+        color:${palette.dark_cyan};
+        margin-left:8px;
+        cursor: pointer;
+    }
+    }
     
 `
 
-const SignUpModal:React.FC = () => {
+interface IProps {
+    closeModal: () => void;
+  }
+
+
+const SignUpModal:React.FC<IProps> = ({closeModal}) => {
     // 비밀번호 숨김 토글할 state
     const [hidePassword,setHidePaddword] = useState(true)
 
@@ -158,10 +176,29 @@ const SignUpModal:React.FC = () => {
         if(!email||!lastname||!firstname||!password){
             return undefined;
         }
+        //* 비밀번호가 올바르지 않다면
+        if (
+            isPasswordHasNameOrEmail ||
+            !isPasswordOverMinLength ||
+            isPasswordHasNumberOrSymbol
+        ) {
+            return false;
+        }
+        //* 생년월일 셀렉터 값이 없다면
+        if (!birthDay || !birthMonth || !birthYear) {
+            return false;
+        }
         return true;
       }
 
       const {setValidateMode}=useValidateMode();
+
+      useEffect(() => {
+        return () => {
+          setValidateMode(false);
+        };
+      }, []);
+
 
       // 회원가입 폼 제출하는 함수
       const onSubmitSignUp = async (event:React.FormEvent<HTMLFormElement>)=>{
@@ -182,7 +219,7 @@ const SignUpModal:React.FC = () => {
                 const {data} = await signupAPI(signUpBody);
                 console.log(data)
                 dispatch(userActions.setLoggedUser(data))
-                
+                closeModal()
             }catch(e){
                 console.log(e)
             }
@@ -192,7 +229,7 @@ const SignUpModal:React.FC = () => {
 
     return (
         <Container onSubmit={onSubmitSignUp}>
-            <CloseXIcon className="modal-close-x-icon"/>
+            <CloseXIcon className="modal-close-x-icon" onClick={closeModal}/>
             <div className='input-wrapper'>
                 <Input placeholder='이메일 주소' type='email' 
                 name="email"
@@ -266,6 +303,7 @@ const SignUpModal:React.FC = () => {
                     <Selector options={monthList}
                         name="birthMonth"
                         value={birthMonth}
+                        isValid={!!birthMonth}
                         onChange={onChangeBirthSelector}
                     />
                 </div>
@@ -273,6 +311,7 @@ const SignUpModal:React.FC = () => {
                     <Selector options={dayList}
                         name="birthDay"
                         value={birthDay}
+                        isValid={!!birthDay}
                         onChange={onChangeBirthSelector}
                     />
                 </div>
@@ -280,12 +319,25 @@ const SignUpModal:React.FC = () => {
                     <Selector options={yearList}
                         name="birthYear"
                         value={birthYear}
+                        isValid={!!birthYear}
                         onChange={onChangeBirthSelector}
                     />
                 </div>
             </div>
             <div className='sign-up-modal-submit-button-wrapper'>
                 <Button type='submit'>가입하기</Button>
+            </div>
+            <div className='sign-up-modal-set-login-wrapper'>
+            <p>
+                이미 에어비앤비 계정이 있나요?
+                <span
+                className="sign-up-modal-set-login"
+                role="presentation"
+                onClick={()=>{}}
+                >
+                로그인
+                </span>
+            </p>
             </div>
         </Container>
     );
