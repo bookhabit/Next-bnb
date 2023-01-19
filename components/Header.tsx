@@ -6,6 +6,8 @@ import AirbnbLogoTextIcon from "../public/static/svg/logo_text.svg"
 import palette from "../styles/palette";
 import SignUpModal from "./auth/SignUpModal";
 import useModal from "../hooks/useModal";
+import { useSelector } from 'react-redux';
+import HambergerIcon from "../public/static/svg/hambergerIcon.svg"
 
 const Container = styled.div`
     /* 헤더창 */
@@ -81,12 +83,36 @@ const Container = styled.div`
                 z-index:11;
             }
         }
+        /* 로그인한 경우 헤더 유저 프로필 스타일링 */
+        .header-user-profile{
+            display:flex;
+            align-items:center;
+            height:42px;
+            padding:0 6px 0 16px;
+            border:0;
+            box-shadow:0px 1px 2px rgba(0,0,0,0.18);
+            border-radius:21px;
+            background-color:white;
+            cursor: pointer;
+            outline:none;
+            &:hover{
+                box-shadow:0px 2px 8px rgba(0,0,0,0.12);
+            }
+        }
+        .header-user-profile-image{
+            margin-left:8px;
+            width:30px;
+            height:30px;
+            border-radius:50%;
+        }
         
 
 `
 
 const Header:React.FC = ()=>{
-    const {openModal,ModalPortal} = useModal();
+    const {openModal,ModalPortal,closeModal} = useModal();
+    const user =useSelector((state:any)=>state.user);
+    console.log(user)
     return (
         <Container>
             <Link href="/">
@@ -95,6 +121,7 @@ const Header:React.FC = ()=>{
                     <AirbnbLogoTextIcon/>
                 </div>
             </Link>
+            {!user.isLogged&&(
             <div className="header-auth-buttons">
                 <button type="button" className="header-sign-up-button"
                 onClick={openModal}
@@ -105,8 +132,18 @@ const Header:React.FC = ()=>{
                     로그인
                 </button>
             </div>
+            )}
+            {user.isLogged&& (
+                <button className="header-user-profile" type="button">
+                    <HambergerIcon/>
+                    <img 
+                        src={user.profileImage}
+                        className="header-user-profile-image"
+                        alt=""/>
+                </button>
+            )}
             <ModalPortal>
-                <SignUpModal/>
+                <SignUpModal closeModal={closeModal} />
             </ModalPortal>
         </Container>
     )
