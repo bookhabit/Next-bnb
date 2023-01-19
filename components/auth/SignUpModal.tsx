@@ -1,22 +1,24 @@
 import React,{useMemo, useState} from 'react';
 import styled from 'styled-components';
-import CloseXIcon from "../../public/static/svg/modal_close_x_icon.svg"
-import MailIcon from "../../public/static/svg/email.svg"
-import PersonIcon from "../../public/static/svg/person.svg"
-import OpenedEyeIcon from "../../public/static/svg/opened_eye.svg"
-import ClosedEyeIcon from "../../public/static/svg/closed_eye.svg"
+import CloseXIcon from "../../public/static/svg/auth/modal_close_x_icon.svg"
+import MailIcon from "../../public/static/svg/auth/email.svg"
+import PersonIcon from "../../public/static/svg/auth/person.svg"
+import OpenedEyeIcon from "../../public/static/svg/auth/opened_eye.svg"
+import ClosedEyeIcon from "../../public/static/svg/auth/closed_eye.svg"
 import palette from '../../styles/palette';
 import Input from '../common/Input';
 import Selector from '../common/Selector';
 import { dayList, monthList, yearList } from '../../lib/staticData';
 import Button from '../common/Button';
 import { signupAPI } from '../../lib/api/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../../store/user';
 import { commonActions } from '../../store/common';
 import useValidateMode from '../../hooks/useValidateMode';
 import PasswordWarning from './PasswordWarning';
 import { useEffect } from 'react';
+import { RootState } from '../../store';
+import { authActions } from '../../store/auth';
 
 const Container = styled.form`
     width:568px;
@@ -191,6 +193,11 @@ const SignUpModal:React.FC<IProps> = ({closeModal}) => {
         return true;
       }
 
+      // 로그인 모달로 변경하는 함수
+      const changeToLoginModal = ()=>{
+        dispatch(authActions.setAuthMode("login"))
+      }
+
       const {setValidateMode}=useValidateMode();
 
       useEffect(() => {
@@ -333,7 +340,7 @@ const SignUpModal:React.FC<IProps> = ({closeModal}) => {
                 <span
                 className="sign-up-modal-set-login"
                 role="presentation"
-                onClick={()=>{}}
+                onClick={changeToLoginModal}
                 >
                 로그인
                 </span>

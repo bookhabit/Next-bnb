@@ -8,6 +8,11 @@ import SignUpModal from "./auth/SignUpModal";
 import useModal from "../hooks/useModal";
 import { useSelector } from 'react-redux';
 import HambergerIcon from "../public/static/svg/hambergerIcon.svg"
+import { useDispatch } from "react-redux";
+import { authActions } from "../store/auth";
+import AuthModal from "./auth/AuthModal";
+// import SignUpModal from "./auth/SignUpModal";
+
 
 const Container = styled.div`
     /* 헤더창 */
@@ -112,7 +117,8 @@ const Container = styled.div`
 const Header:React.FC = ()=>{
     const {openModal,ModalPortal,closeModal} = useModal();
     const user =useSelector((state:any)=>state.user);
-    console.log(user)
+    
+    const dispatch = useDispatch();
     return (
         <Container>
             <Link href="/">
@@ -124,11 +130,19 @@ const Header:React.FC = ()=>{
             {!user.isLogged&&(
             <div className="header-auth-buttons">
                 <button type="button" className="header-sign-up-button"
-                onClick={openModal}
+                onClick={ ()=>{
+                    dispatch(authActions.setAuthMode("signup"));
+                    openModal();
+                } }
                 >
                     회원가입
                 </button>
-                <button type="button" className="header-login-button">
+                <button type="button" className="header-login-button"
+                onClick={ ()=>{
+                    dispatch(authActions.setAuthMode("login"));
+                    openModal();
+                } }
+                >
                     로그인
                 </button>
             </div>
@@ -143,7 +157,7 @@ const Header:React.FC = ()=>{
                 </button>
             )}
             <ModalPortal>
-                <SignUpModal closeModal={closeModal} />
+                <AuthModal closeModal={closeModal} />
             </ModalPortal>
         </Container>
     )

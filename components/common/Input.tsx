@@ -10,6 +10,8 @@ type InputContainerProps = {
 }
 
 const Container = styled.div<InputContainerProps>`
+    display:flex;
+    align-items:center;
     input{
             position:relative;
             width:100%;
@@ -42,7 +44,7 @@ const Container = styled.div<InputContainerProps>`
         position:absolute;
         top:0;
         right:11px;
-        height:46px;
+        height:75px;
         display:flex;
         align-items:center;
     }

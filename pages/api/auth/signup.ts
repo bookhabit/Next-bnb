@@ -18,7 +18,6 @@ export default async (req:NextApiRequest,res:NextApiResponse)=>{
         if(userExist){
             res.statusCode = 409;
             return res.send("이미 가입된 이메일입니다.")
-        
         }
 
         // 비밀번호 암호화
