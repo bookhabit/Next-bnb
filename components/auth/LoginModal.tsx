@@ -9,6 +9,8 @@ import Button from "../common/Button";
 import Input from "../common/Input";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../store/auth";
+import { loginAPI } from "../../lib/api/auth";
+import async from './../../pages/api/auth/signup';
 
 const Container = styled.form`
   width: 568px;
@@ -72,8 +74,25 @@ const LoginModal: React.FC<IProps> = ({ closeModal }) => {
         dispatch(authActions.setAuthMode("signup"))
     }
 
+    // 로그인 버튼 클릭 시 API호출
+    const onSubmitLogin = async (event:React.FormEvent<HTMLFormElement>)=>{
+        event.preventDefault();
+        if(!email||!password){
+            alert("이메일과 비밀번호를 입력해주세요.")
+        }else{
+            const loginBody = {email,password}
+            console.log('loginBody:',loginBody)
+            try{
+                const {data} = await loginAPI(loginBody)
+                console.log(data)
+            }catch(e){
+                console.log(e)
+            }
+        }
+    }
+
   return (
-    <Container>
+    <Container onSubmit={onSubmitLogin}>
       <CloseXIcon className="mordal-close-x-icon" onClick={closeModal} />
       <div className="login-input-wrapper">
         <Input
@@ -101,7 +120,7 @@ const LoginModal: React.FC<IProps> = ({ closeModal }) => {
         </Button>
       </div>
       <p>
-        이미 에어비앤비 계정이 있나요?
+        에어비앤비 계정이 없으세요?
         <span
           className="login-modal-set-signup"
           role="presentation"
