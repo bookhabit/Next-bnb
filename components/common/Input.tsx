@@ -28,17 +28,11 @@ const Container = styled.div<InputContainerProps>`
                 border-color:${palette.dark_cyan} !important;
             }
         }
-        svg{
-            position:absolute;
-            right:11px;
-            height:46px;
-        }
-        .input-error-message{
-            margin-top:8px;
-            font-weight:600;
-            font-size:14px;
-            color:${palette.tawny};
-        }
+    svg{
+        position:absolute;
+        right:11px;
+        height:46px;
+    }
         
     .input-icon-wrapper{
         position:absolute;
@@ -69,8 +63,16 @@ const Container = styled.div<InputContainerProps>`
         border-color: ${palette.dark_cyan};
       }
     `}
-    
-    
+`
+
+const ErrorContainer = styled.div`
+  margin-top:8px;
+    p{
+      color:${palette.tawny};
+      font-weight:600;
+      font-size:14px;
+    }
+        
 `
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -85,14 +87,19 @@ const Input:React.FC<IProps> = ({icon,isValid=false,useValidation=true,errorMess
     const validateMode = useSelector((state:any) => state.common.validateMode);
 
     return (
+      <>
         <Container 
             iconExist={!!icon} 
             isValid={isValid} 
             useValidation={validateMode&&useValidation}>
             <input {...props}/>
             <div className='input-icon-wrapper'>{icon}</div>
-            {useValidation&&validateMode&&!isValid&&errorMessage&&(<p className='input-error-message'>{errorMessage}</p>)}
         </Container>
+        <ErrorContainer>
+          {useValidation&&validateMode&&!isValid&&errorMessage&&
+          (<p>{errorMessage}</p>)}
+        </ErrorContainer>
+        </>
     );
 };
 
