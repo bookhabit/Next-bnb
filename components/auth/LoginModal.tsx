@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { authActions } from "../../store/auth";
 import { loginAPI } from "../../lib/api/auth";
 import useValidateMode from "../../hooks/useValidateMode";
+import { userActions } from './../../store/user';
 
 
 const Container = styled.form`
@@ -90,12 +91,19 @@ const LoginModal: React.FC<IProps> = ({ closeModal }) => {
             console.log('loginBody:',loginBody)
             try{
                 const {data} = await loginAPI(loginBody)
-                console.log(data)
+                dispatch(userActions.setLoggedUser(data))
+                closeModal()
             }catch(e){
                 console.log(e)
             }
         }
     }
+
+    useEffect(()=>{
+        return ()=>{
+            setValidateMode(false)
+        }
+    },[])
 
   return (
     <Container onSubmit={onSubmitLogin}>
