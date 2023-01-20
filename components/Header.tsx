@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { authActions } from "../store/auth";
 import AuthModal from "./auth/AuthModal";
 // import SignUpModal from "./auth/SignUpModal";
-
+import OutsideClickHandler from "react-outside-click-handler";
 
 const Container = styled.div`
     /* 헤더창 */
@@ -110,7 +110,40 @@ const Container = styled.div`
             height:30px;
             border-radius:50%;
         }
-        
+
+        /** react-ouside-click-handler div */
+        .header-logo-wrapper + div {
+            position: relative;
+        }
+
+        .header-usermenu {
+            position: absolute;
+            right: 0;
+            top: 52px;
+            width: 240px;
+            padding: 8px 0;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+            border-radius: 8px;
+            background-color: white;
+            li {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 42px;
+            padding: 0 16px;
+            cursor: pointer;
+            &:hover {
+                background-color: ${palette.gray_f7};
+            }
+            }
+            .header-usermenu-divider {
+            width: 100%;
+            height: 1px;
+            margin: 8px 0;
+            background-color: ${palette.gray_dd};
+            }
+        }
+                
 
 `
 
@@ -119,6 +152,10 @@ const Header:React.FC = ()=>{
     const user =useSelector((state:any)=>state.user);
     
     const dispatch = useDispatch();
+
+    const [isUsermenuOpened, setIsUsermenuOpened] = useState(false);
+    const userProfileImage = useSelector((state:any) => state.user.profileImage);
+
     return (
         <Container>
             <Link href="/">
@@ -148,17 +185,50 @@ const Header:React.FC = ()=>{
             </div>
             )}
             {user.isLogged&& (
-                <button className="header-user-profile" type="button">
-                    <HambergerIcon/>
-                    <img 
-                        src={user.profileImage}
+                    <OutsideClickHandler
+                    onOutsideClick={() => {
+                        if (isUsermenuOpened) {
+                        setIsUsermenuOpened(false);
+                        }
+                    }}
+                    >
+                    <button
+                        className="header-user-profile"
+                        type="button"
+                        onClick={() => setIsUsermenuOpened(!isUsermenuOpened)}
+                    >
+                        <HambergerIcon />
+                        <img
+                        src={userProfileImage}
                         className="header-user-profile-image"
-                        alt=""/>
-                </button>
+                        alt=""
+                        />
+                    </button>
+                    {isUsermenuOpened && (
+                        <ul className="header-usermenu">
+                        <li>숙소 관리</li>
+                        <Link href="/room/register/building">
+                            <div
+                            role="presentation"
+                            onClick={() => {
+                                setIsUsermenuOpened(false);
+                            }}
+                            >
+                            <li>숙소 등록하기</li>
+                            </div>
+                        </Link>
+                        <div className="header-usermenu-divider" />
+                        <li role="presentation">
+                            로그아웃
+                        </li>
+                        </ul>
+                    )}
+                    </OutsideClickHandler>
             )}
             <ModalPortal>
                 <AuthModal closeModal={closeModal} />
-            </ModalPortal>
+            </ModalPortal>          
+
         </Container>
     )
 }
