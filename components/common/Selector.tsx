@@ -63,4 +63,4 @@ const Selector:React.FC<IProps> = ({options=[],
     );
 };
 
-export default Selector;
+export default React.memo(Selector);

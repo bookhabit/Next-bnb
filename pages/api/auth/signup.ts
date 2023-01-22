@@ -36,7 +36,7 @@ export default async (req:NextApiRequest,res:NextApiResponse)=>{
             firstname,
             password:hashedPassword,
             birthday,
-            profileImage:"defaultUserProfile"
+            profileImage:"/static/image/user/default_user_profile_image.jpg"
         }
 
         Data.user.write([...users,newUser])        

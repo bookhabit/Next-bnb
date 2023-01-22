@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../lib/api';
 import { UserType } from '../../types/user';
 
 // 회원가입 body
