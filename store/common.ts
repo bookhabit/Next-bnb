@@ -18,5 +18,5 @@ const common = createSlice({
 })
 
 export const commonActions = {...common.actions}
-console.log(commonActions)
+
 export default common;
