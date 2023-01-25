@@ -1,42 +1,42 @@
-import React, { ChangeEvent } from 'react';
-import styled from 'styled-components';
-import palette from '../../styles/palette';
-import Selector from '../common/Selector';
-import { largeBuildingTypeList } from '../../lib/staticData';
-import { registerRoomActions } from './../../store/registerRoom';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { useMemo } from 'react';
-import RadioGroup from '../common/RadioGroup';
-import RegisterRoomFooter from './RegisterRoomFooter';
+import React, { useMemo } from "react";
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
+import { largeBuildingTypeList } from "../../lib/staticData";
+import palette from "../../styles/palette";
+import Selector from "../common/Selector";
+import { useSelector } from "../../store";
+import { registerRoomActions } from "../../store/registerRoom";
+import RadioGroup from "../common/RadioGroup";
+import RegisterRoomFooter from "./RegisterRoomFooter";
 
 const Container = styled.div`
-    padding:62px 30px 100px;
-    h2{
-        font-size:19px;
-        font-weight:800;
-        margin-bottom:56px;
-    }
-    h3{
-        font-weight:bole;
-        color:${palette.gray_76};
-        margin-bottom:6px;
-    }
-    .register-room-building-selector-wrapper{
-        width:320px;
-        margin-bottom:32px;
-    }
-    .register-room-room-type-radio{
-      max-width:485px;
-      margin-bottom:50px;
-    }
-    .register-room-is-setup-for-guest-radio{
-      margin-bottom:50px;
-    }
+  padding: 62px 30px 100px;
+  h2 {
+    font-size: 19px;
+    font-weight: 800;
+    margin-bottom: 56px;
+  }
+  h3 {
+    font-size: 14px;
+    font-weight: bold;
+    color: ${palette.gray_76};
+    margin-bottom: 6px;
+  }
 
-`
+  .register-room-building-selector-wrapper {
+    width: 320px;
+    margin-bottom: 32px;
+  }
+  .register-room-room-type-radio {
+    max-width: 485px;
+    margin-bottom: 50px;
+  }
+  .register-room-is-setup-for-guest-radio {
+    margin-bottom: 50px;
+  }
+`;
 
-// 선택 불가능한 큰 범위 건물 유형
+//* 선택 불가능 한 큰 범위 건물유형
 const disabledlargeBuildingTypeOptions = ["하나를 선택해주세요."];
 
 //* 숙소유형 radio options
@@ -61,53 +61,54 @@ const roomTypeRadioOptions = [
   },
 ];
 
-// 게스트만 사용하도록 만들어진 숙소인지 라디오 options
+//* 게스트만 사용하도록 만들어진 숙소인지 라디오 options
 const isSetUpForGuestOptions = [
   {
-    label:"예, 게스트용으로 따로 마련된 숙소입니다.",
-    value:true,
+    label: "예. 게스트용으로 따로 마련된 숙소입니다.",
+    value: true,
   },
   {
-    label:"아니요, 제 개인 물건이 숙소에 있습니다.",
-    value:false,
+    label: "아니요. 제 개인 물건이 숙소에 있습니다.",
+    value: false,
   },
-]
+];
 
-const RegisterRoomBuilding:React.FC = () => {
-    const largeBuildingType = useSelector((state:any)=>state.registerRoom.largeBuildingType);
+const RegisterRoomBuilding: React.FC = () => {
+  const largeBuildingType = useSelector(
+    (state:any) => state.registerRoom.largeBuildingType
+  );
+  const buildingType = useSelector((state:any) => state.registerRoom.buildingType);
+  const roomType = useSelector((state:any) => state.registerRoom.roomType);
+  const isSetUpForGuest = useSelector(
+    (state:any) => state.registerRoom.isSetUpForGuest
+  );
+  const dispatch = useDispatch();
 
-    const buildingType = useSelector((state:any)=>state.registerRoom.buildingType)
+  //* 큰 범위 건물유형 변경시
+  const onChangeLargeBuildingType = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    dispatch(registerRoomActions.setLargeBuildingType(event.target.value));
+  };
 
-    const roomType = useSelector((state:any)=>state.roomType)
+  //* 상세 건물유형 변경시
+  const onChangeBuildingType = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    dispatch(registerRoomActions.setBuildingType(event.target.value));
+  };
 
-    const isSetUpForGuest = useSelector((state:any)=>state.isSetUpForGuest)
+  //* 숙소 유형 변경시
+  const onChangeRoomType = (value: any) => {
+    dispatch(registerRoomActions.setRoomType(value));
+  };
 
-    const dispatch = useDispatch();
+  //* 게스트용 숙소 인지 변경시
+  const onChangeIsSetUpForGuest = (value: any) => {
+    dispatch(registerRoomActions.setIsSetUpForGuest(value));
+  };
 
-    // 큰 범위 건물 유형 변경 시 
-    const onChangeLargeBuildingType = (
-        event:React.ChangeEvent<HTMLSelectElement>
-    )=>{
-        dispatch(registerRoomActions.setLargeBuildingType(event.target.value))
-    }
-    // 상세 건물 유형 변경 시 
-    const onChangeBuildingType = (
-        event:React.ChangeEvent<HTMLSelectElement>
-    )=>{
-        dispatch(registerRoomActions.setBuildingType(event.target.value))
-    }    
-
-    //* 숙소 유형 변경시
-    const onChangeRoomType = (value: any) => {
-      dispatch(registerRoomActions.setRoomType(value));
-    };
-
-    // 게스트용 숙소인지 변경 시
-    const onChangeIsSetUpForGuest = (value:any)=>{
-      dispatch(registerRoomActions.setIsSetUpForGuest(value))
-    }
-
-    //* 선택된 건물 유형 options
+  //* 선택된 건물 유형 options
   const detailBuildingOptions = useMemo(() => {
     switch (largeBuildingType) {
       case "아파트": {
@@ -161,61 +162,76 @@ const RegisterRoomBuilding:React.FC = () => {
     }
   }, [largeBuildingType]);
 
-    console.log('roomType',roomType)
-    console.log('buildingType',buildingType)
+  //* 모든 값이 있는지 확인하기
+  const isValid = useMemo(() => {
+    console.log(largeBuildingType,buildingType,roomType,isSetUpForGuest)
+    if (
+      !largeBuildingType ||
+      !buildingType ||
+      !roomType ||
+      isSetUpForGuest === null
+    ) {
+      return false;
+    }
+    return true;
+  }, [largeBuildingType, buildingType, roomType, isSetUpForGuest]);
 
-    return (
-        <Container>
-            <h2>등록할 숙소 종류는 무엇인가요?</h2>
-            <h3>1단계</h3>
-            <div className='register-room-building-selector-wrapper'>
-                <Selector
-                    type='register'
-                    value={largeBuildingType||undefined}
-                    disabledOptions={disabledlargeBuildingTypeOptions}
-                    label="우선 범위를 좁혀볼까요?"
-                    options={largeBuildingTypeList}
-                    onChange={onChangeLargeBuildingType}/>
-            </div>
-            <div className="register-room-building-selector-wrapper">
-                <Selector
-                type="register"
-                value={buildingType || undefined}
-                onChange={onChangeBuildingType}
-                disabled={!largeBuildingType}
-                label="건물 유형을 선택하세요."
-                options={detailBuildingOptions}
-                />
-            </div>
-            {buildingType&&(
-              <>
-              <div className='register-room-room-type-radio'>
-                <RadioGroup
-                  label='게스트가 묵게 될 숙소 유형을 골라주세요.'
-                  name="숙소 유형"
-                  value={roomType||undefined}
-                  options={roomTypeRadioOptions}
-                  onChange={onChangeRoomType}
-                  />
-              </div>
-              <div className='register-room-is-setup-for-guest-radio'>
-                <RadioGroup
-                  label='게스트만 사용하도록 만들어진 숙소인가요?'
-                  name="게스트용"
-                  value={isSetUpForGuest}
-                  onChange={onChangeIsSetUpForGuest}
-                  options={isSetUpForGuestOptions}
-                  />
-              </div>
-              </>
-            )}
-            <RegisterRoomFooter
-              isValid={false}
-              prevHref="/"
-              nextHref='/room/register/bedrooms'
-              />
-        </Container>
-    );
+  return (
+    <Container>
+      <h2>등록하실 숙소 종류는 무엇인가요?</h2>
+      <h3>1단계</h3>
+      <div className="register-room-building-selector-wrapper">
+        <Selector
+          type="register"
+          value={largeBuildingType || undefined}
+          defaultValue="하나를 선택해주세요."
+          disabledOptions={disabledlargeBuildingTypeOptions}
+          label="우선 범위를 좁혀볼까요?"
+          options={largeBuildingTypeList}
+          onChange={onChangeLargeBuildingType}
+          isValid={!!largeBuildingType}
+        />
+      </div>
+      <div className="register-room-building-selector-wrapper">
+        <Selector
+          type="register"
+          value={buildingType || undefined}
+          onChange={onChangeBuildingType}
+          disabled={!largeBuildingType}
+          label="건물 유형을 선택하세요."
+          options={detailBuildingOptions}
+          isValid={!!buildingType}
+        />
+      </div>
+      {buildingType && (
+        <>
+          <div className="register-room-room-type-radio">
+            <RadioGroup
+              label="게스트가 묵게 될 숙소 유형을 골라주세요."
+              value={roomType}
+              options={roomTypeRadioOptions}
+              onChange={onChangeRoomType}
+              isValid={!!roomType}
+            />
+          </div>
+          <div className="register-room-is-setup-for-guest-radio">
+            <RadioGroup
+              label="게스트만 사용하도록 만들어진 숙소인가요?"
+              value={isSetUpForGuest}
+              onChange={onChangeIsSetUpForGuest}
+              options={isSetUpForGuestOptions}
+              isValid={isSetUpForGuest !== null}
+            />
+          </div>
+        </>
+      )}
+      <RegisterRoomFooter
+        isValid={isValid}
+        prevHref="/"
+        nextHref="/room/register/bedrooms"
+      />
+    </Container>
+  );
 };
 
 export default RegisterRoomBuilding;

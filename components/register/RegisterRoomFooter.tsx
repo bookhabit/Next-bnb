@@ -39,7 +39,7 @@ interface IProps {
 const RegisterRoomFooter: React.FC<IProps> = ({
   prevHref,
   nextHref,
-  isValid = true,
+  isValid,
 }) => {
   const { setValidateMode } = useValidateMode();
 
@@ -52,6 +52,7 @@ const RegisterRoomFooter: React.FC<IProps> = ({
   const onClickNext = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
+    // 값이 유효하지 않을경우
     if (!isValid) {
       event.preventDefault();
       setValidateMode(true);
