@@ -29,6 +29,9 @@ const Container = styled.div`
       max-width:485px;
       margin-bottom:50px;
     }
+    .register-room-is-setup-for-guest-radio{
+      margin-bottom:50px;
+    }
 
 `
 
@@ -57,12 +60,26 @@ const roomTypeRadioOptions = [
   },
 ];
 
+// 게스트만 사용하도록 만들어진 숙소인지 라디오 options
+const isSetUpForGuestOptions = [
+  {
+    label:"예, 게스트용으로 따로 마련된 숙소입니다.",
+    value:true,
+  },
+  {
+    label:"아니요, 제 개인 물건이 숙소에 있습니다.",
+    value:false,
+  },
+]
+
 const RegisterRoomBuilding:React.FC = () => {
     const largeBuildingType = useSelector((state:any)=>state.registerRoom.largeBuildingType);
 
     const buildingType = useSelector((state:any)=>state.registerRoom.buildingType)
 
     const roomType = useSelector((state:any)=>state.roomType)
+
+    const isSetUpForGuest = useSelector((state:any)=>state.isSetUpForGuest)
 
     const dispatch = useDispatch();
 
@@ -79,13 +96,17 @@ const RegisterRoomBuilding:React.FC = () => {
         dispatch(registerRoomActions.setBuildingType(event.target.value))
     }    
 
-    
     //* 숙소 유형 변경시
     const onChangeRoomType = (value: any) => {
       dispatch(registerRoomActions.setRoomType(value));
     };
 
-      //* 선택된 건물 유형 options
+    // 게스트용 숙소인지 변경 시
+    const onChangeIsSetUpForGuest = (value:any)=>{
+      dispatch(registerRoomActions.setIsSetUpForGuest(value))
+    }
+
+    //* 선택된 건물 유형 options
   const detailBuildingOptions = useMemo(() => {
     switch (largeBuildingType) {
       case "아파트": {
@@ -166,14 +187,26 @@ const RegisterRoomBuilding:React.FC = () => {
                 />
             </div>
             {buildingType&&(
+              <>
               <div className='register-room-room-type-radio'>
                 <RadioGroup
                   label='게스트가 묵게 될 숙소 유형을 골라주세요.'
+                  name="숙소 유형"
                   value={roomType||undefined}
                   options={roomTypeRadioOptions}
                   onChange={onChangeRoomType}
                   />
               </div>
+              <div className='register-room-is-setup-for-guest-radio'>
+                <RadioGroup
+                  label='게스트만 사용하도록 만들어진 숙소인가요?'
+                  name="게스트용"
+                  value={isSetUpForGuest}
+                  onChange={onChangeIsSetUpForGuest}
+                  options={isSetUpForGuestOptions}
+                  />
+              </div>
+              </>
             )}
         </Container>
     );

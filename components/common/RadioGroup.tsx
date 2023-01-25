@@ -110,6 +110,7 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   options?: { label: string; value: any; description?: string }[];
   isValid?: boolean;
   errorMessage?: string;
+  name?:string;
 }
 
 const RadioGroup: React.FC<IProps> = ({
@@ -119,6 +120,7 @@ const RadioGroup: React.FC<IProps> = ({
   onChange,
   isValid,
   errorMessage = "옵션을 선택하세요",
+  name
 }) => {
   const validateMode = useSelector((state) => state.common.validateMode);
   console.log('value',value)
@@ -131,7 +133,7 @@ const RadioGroup: React.FC<IProps> = ({
           <label key={index}>
             <input
               type="radio"
-              name="숙소 유형"
+              name={name}
               checked={true}
               onChange={() => onChange && onChange(option.value)}
             />
