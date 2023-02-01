@@ -1,4 +1,5 @@
 import { createSlice,PayloadAction } from "@reduxjs/toolkit";
+import { BedType } from "../types/room";
 
 // 데이터 타입지정
 type RegisterRoomState= {
@@ -6,18 +7,33 @@ type RegisterRoomState= {
     buildingType:string|null; // 건물 유형
     roomType:string|null; // 숙소 유형
     isSetUpForGuest:boolean|null; // 게스트용인지
+    maximumGuestCount:number; // 최대 숙박인원
+    bedroomCount: number; // 침실 개수
+    bedCount: number; // 침대 개수
+    bedList: { id: number; beds: { type: BedType; count: number }[] }[]; // 침대유형
+    publicBedList: { type: BedType; count: number }[]; // 공용공간 침대유형
 }
 
 // 초기상태
 const initialState:RegisterRoomState = {
-    // 건물유형 큰 범주
-    largeBuildingType:null,
-    // 건물유형
-    buildingType:null,
-    // 숙소유형
-    roomType:null,
-    // 게스트만을 위해 만들어진 숙소인가
-    isSetUpForGuest:null,
+  //* 건물유형 큰 범주
+  largeBuildingType: null,
+  //* 건물유형
+  buildingType: null,
+  //* 숙소유형
+  roomType: null,
+  //* 게스트만을 위해 만들어진 숙소인가
+  isSetUpForGuest: null,
+  //* 최대 숙박 인원
+  maximumGuestCount: 1,
+  //* 침실 개수
+  bedroomCount: 0,
+  //* 침대 개수
+  bedCount: 1,
+  //* 침대 유형
+  bedList: [],
+  //* 공용공간 침대 유형
+  publicBedList: [],
 }
 
 const registerRoom = createSlice({

@@ -31,16 +31,16 @@ export default async (req:NextApiRequest,res:NextApiResponse)=>{
             const token = jwt.sign(String(user.id),process.env.JWT_SECRET!)
             console.log(token)
             // access-token 생성
-        res.setHeader(
-            "Set-Cookie",
-            `access_token=${token};path=/;expires=${new Date(Date.now()+60*60*24*1000*3).toUTCString()};httponly`
-        );
+            res.setHeader(
+                "Set-Cookie",
+                `access_token=${token};path=/;expires=${new Date(Date.now()+60*60*24*1000*3).toUTCString()};httponly`
+            );
 
-        const userWithoutPassword:Partial<Pick<StoredUserType,"password">> = user;
+            const userWithoutPassword:Partial<Pick<StoredUserType,"password">> = user;
 
-        delete userWithoutPassword.password;
-        res.statusCode = 200;
-        return res.send(user);
+            delete userWithoutPassword.password;
+            res.statusCode = 200;
+            return res.send(user);
 
         }catch(e){
             console.log(e)

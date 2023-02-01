@@ -1,4 +1,4 @@
-//* users.json에 저장된 유저 타입
+//* users.json에 저장된 유저 타입 - 서버
 export type StoredUserType = {
     id: number;
     email: string;
@@ -9,7 +9,7 @@ export type StoredUserType = {
     profileImage: string;
   };
   
-  // password값 지운 유저타입
+  // password값 지운 유저타입 - 클라이언트
   export type UserType = {
     id: number;
     email: string;

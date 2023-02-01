@@ -22,6 +22,8 @@ export default async (req:NextApiRequest,res:NextApiResponse)=>{
 
         // 비밀번호 암호화
         const hashedPassword = bcrypt.hashSync(password,8)
+        
+        // 유저 정보 추가
         const users = Data.user.getList();
         let userId;
         if(users.length===0){

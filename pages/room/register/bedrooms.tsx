@@ -1,11 +1,8 @@
 import React from 'react';
+import RegisterRoomBedrooms from '../../../components/register/RegisterRoomBedrooms';
 
 const bedrooms = () => {
-    return (
-        <div>
-            <h1>hi</h1>
-        </div>
-    );
+    return <RegisterRoomBedrooms/>
 };
 
 export default bedrooms;

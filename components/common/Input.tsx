@@ -42,6 +42,14 @@ const Container = styled.div<InputContainerProps>`
         display:flex;
         align-items:center;
     }
+    /* 에러메시지 스타일링 */
+    .input-error-message{
+        margin-top:8px;
+        font-weight:600;
+        font-size:14px;
+        color:${palette.tawny}
+    }
+
     /* 인풋 밸리데이션 */
     ${({ useValidation, isValid }) =>
     useValidation &&
