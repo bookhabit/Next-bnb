@@ -15,6 +15,9 @@ const globalStyle = css`
         text-decoration: none;
         color:${palette.black};
     }
+    li{
+        list-style: none;
+    }
 `
 
 const GlobalStyle = createGlobalStyle`

@@ -59,7 +59,6 @@ interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
 }
 
 const Button:React.FC<IProps> = ({children,color,styleType="normal",...props}) => {
-    console.log(styleType)
     return (
         <Container {...props} color={color} styleType={styleType}>
             {children}

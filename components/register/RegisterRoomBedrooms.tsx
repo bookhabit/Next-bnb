@@ -8,6 +8,7 @@ import Selector from '../common/Selector';
 import { bedroomCountList } from '../../lib/staticData';
 import { getNumber } from '../../lib/utils';
 import Button from '../common/Button';
+import RegisterRoomBedTypes from './RegisterRoomBedTypes';
 
 const Container = styled.div`
     padding: 62px 30px 100px;
@@ -52,26 +53,6 @@ const Container = styled.div`
     .register-room-bed-type-list-wrapper{
         width:548px;
     }
-    .register-room-bedroom{
-        width:100%;
-        padding:28px 0;
-        border-top:1px solid ${palette.gray_dd};
-        &:last-child{
-            border-bottom:1px solid ${palette.gray_dd}
-        }
-    }
-    .register-room-bed-type-top{
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-    }
-    .register-room-bed-type-bedroom-texts{
-        margin-bottom:28px;
-    }
-    .register-room-bed-type-bedroom{
-        font-size:19px;
-        color:${palette.gray_48}
-    }
 `
 
 const RegisterRoomBedrooms = () => {
@@ -82,7 +63,7 @@ const RegisterRoomBedrooms = () => {
     const bedCount = useSelector((state:any)=>state.registerRoom.bedCount)
 
     const bedList = useSelector((state:any)=>state.registerRoom.bedList)
-
+    console.log('bedList',bedList)
     const dispatch = useDispatch();
 
     // 최대 숙박인원 변경 시 
@@ -133,21 +114,7 @@ const RegisterRoomBedrooms = () => {
             </p>
             <div className='register-room-bed-type-list-wrapper'>
                 {bedList.map((bedroom:any)=>(
-                    <div className='register-room-bedroom'>
-                    <div className='register-room-bed-type-top'>
-                        <div className='register-room-bed-type-bedroom-texts'>
-                            <p className='register-room-bed-type-bedroom'>
-                                {bedroom.id}번 침실
-                            </p>
-                            <p className='register-room-bed-type-bedroom-counts'>
-                                침대 0개
-                            </p>
-                        </div>
-                        <Button styleType='register' color="white">
-                            침대 추가하기
-                        </Button>
-                    </div>
-                </div>
+                   <RegisterRoomBedTypes bedroom={bedroom} key={bedroom.id} />
                 ))}
             </div>
             
