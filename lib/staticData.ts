@@ -128,3 +128,5 @@ export const boutiquesHotelBuildingTypeList = [
 ];
 
 
+// 침실 개수
+export const bedroomCountList = Array.from(Array(16),(_,i)=>`침실 ${i}개`)
