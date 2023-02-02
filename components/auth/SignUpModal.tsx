@@ -332,7 +332,7 @@ const SignUpModal:React.FC<IProps> = ({closeModal}) => {
                 </div>
             </div>
             <div className='sign-up-modal-submit-button-wrapper'>
-                <Button type='submit'>가입하기</Button>
+                <Button type='submit' color="bittersweet">가입하기</Button>
             </div>
             <div className='sign-up-modal-set-login-wrapper'>
             <p>

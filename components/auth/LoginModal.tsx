@@ -133,7 +133,7 @@ const LoginModal: React.FC<IProps> = ({ closeModal }) => {
         />
       </div>
       <div className="login-modal-submit-button-wrapper">
-        <Button type="submit">
+        <Button type="submit" color="bittersweet">
           로그인
         </Button>
       </div>
