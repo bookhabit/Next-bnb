@@ -6,7 +6,6 @@ import palette from "../../styles/palette"
 
 //* 버튼 색상 구하기
 const getButtonColor = (color: string, colorReverse: boolean) => {
-    console.log(colorReverse)
     if (colorReverse) {
       switch (color) {
         case "dark_cyan":

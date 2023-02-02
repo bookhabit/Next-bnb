@@ -126,7 +126,7 @@ const Selector: React.FC<IProps> = ({
   disabledOptions = [],
   ...props
 }) => {
-  const validateMode = useSelector((state) => state.common.validateMode);
+  const validateMode = useSelector((state) => state.common.validateMode);  
   return (
     <Container
       isValid={!!isValid}

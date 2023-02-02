@@ -10,6 +10,12 @@ type InputContainerProps = {
 }
 
 const Container = styled.div<InputContainerProps>`
+    label {
+        span {
+          display: block;
+          margin-bottom: 8px;
+        }
+      }
     display:flex;
     align-items:center;
     input{
@@ -63,14 +69,14 @@ const Container = styled.div<InputContainerProps>`
         }
       }
     `}
-  ${({ useValidation, isValid }) =>
-    useValidation &&
-    isValid &&
-    css`
-      input {
-        border-color: ${palette.dark_cyan};
-      }
-    `}
+    ${({ useValidation, isValid }) =>
+      useValidation &&
+      isValid &&
+      css`
+        input {
+          border-color: ${palette.dark_cyan};
+        }
+      `}
 `
 
 const ErrorContainer = styled.div`
@@ -85,12 +91,13 @@ const ErrorContainer = styled.div`
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
     icon?:JSX.Element;
+    label?:string;
     isValid?:boolean;
     useValidation?:boolean;
     errorMessage?:string;
 }
 
-const Input:React.FC<IProps> = ({icon,isValid=false,useValidation=true,errorMessage,...props})=>{
+const Input:React.FC<IProps> = ({label,icon,isValid=false,useValidation=true,errorMessage,...props})=>{
     
     const validateMode = useSelector((state:any) => state.common.validateMode);
 
@@ -100,8 +107,19 @@ const Input:React.FC<IProps> = ({icon,isValid=false,useValidation=true,errorMess
             iconExist={!!icon} 
             isValid={isValid} 
             useValidation={validateMode&&useValidation}>
-            <input {...props}/>
-            <div className='input-icon-wrapper'>{icon}</div>
+            {label && (
+              <label>
+                <span>{label}</span>
+                <input {...props} />
+              </label>
+            )}
+            {!label &&( 
+              <>
+                <input {...props} />
+                <div className='input-icon-wrapper'>{icon}</div>
+              </> 
+            )}
+            
         </Container>
         <ErrorContainer>
           {useValidation&&validateMode&&!isValid&&errorMessage&&
