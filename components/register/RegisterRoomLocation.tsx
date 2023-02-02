@@ -9,6 +9,7 @@ import Input from '../common/Input';
 import { useSelector } from 'react-redux';
 import { registerRoomActions } from './../../store/registerRoom';
 import { useDispatch } from 'react-redux';
+import RegisterRoomFooter from './RegisterRoomFooter';
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -33,11 +34,11 @@ const Container = styled.div`
     margin-bottom: 24px;
   }
   .register-room-location-country-selector-wrapper {
-    width: 385px;
+    width: 385px; 
     margin-bottom: 24px;
   }
   .register-room-location-city-district {
-    max-width: 385px;
+    max-width: 385px; 
     display: flex;
     margin-bottom: 24px;
     > div:first-child {
@@ -125,14 +126,16 @@ const RegisterRoomLocation = () => {
                 />
             </div>
             <div className="register-room-location-city-district">
-                <Input label="시/도" value={city} onChange={onChangeCity} />
-                <Input label="시/군/구" value={district} onChange={onChangeDistrict} />
+                <Input label="시/도" value={city} onChange={onChangeCity}
+                useValidation={false} />
+                <Input label="시/군/구" value={district} onChange={onChangeDistrict} useValidation={false}/>
             </div>
             <div className="register-room-location-street-address">
                 <Input
                     label="도로명주소"
                     value={streetAddress}
                     onChange={onChangeStreetAdress}
+                    useValidation={false}
                 />
             </div>
             <div className="register-room-location-detail-address">
@@ -144,8 +147,14 @@ const RegisterRoomLocation = () => {
                 />
             </div>
             <div className="register-room-location-postcode">
-                <Input label="우편번호" value={postcode} onChange={onChangePostcode} />
+                <Input label="우편번호" value={postcode} onChange={onChangePostcode} 
+                useValidation={false}/>
             </div>
+            {/* 일단 푸터적용해서 다음단계 적용 */}
+            <RegisterRoomFooter 
+                prevHref='/room/register/bathroom'
+                nextHref='/room/register/amentities'
+                />
         </Container>
     );
 };
