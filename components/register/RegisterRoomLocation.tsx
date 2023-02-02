@@ -154,6 +154,7 @@ const RegisterRoomLocation = () => {
             <RegisterRoomFooter 
                 prevHref='/room/register/bathroom'
                 nextHref='/room/register/amentities'
+                isValid={true} // 일단 true로 설정해둠 이동할수있도록
                 />
         </Container>
     );
