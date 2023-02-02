@@ -86,7 +86,6 @@ const CheckboxGroup: React.FC<IProps> = ({
   onChange,
   options = [],
 }) => {
-  console.log(value)
   return (
     <Container>
       {options.map((option) => (

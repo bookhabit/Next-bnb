@@ -55,7 +55,7 @@ const RegisterRoomAmentities: React.FC = () => {
           />
       </div>
       <RegisterRoomFooter
-        prevHref="/room/register/geometry"
+        prevHref="/room/register/location"
         nextHref="/room/register/conveniences"
         isValid={!!amentities}
       />
