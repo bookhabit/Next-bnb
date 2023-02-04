@@ -30,9 +30,9 @@ const RegisterRoomPrice = () => {
     //* 금액 변경시
   const onChangePrice = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value;
-    console.log(input)
-    console.log(input.replace(/,/g, ""))
+    
     const numberPrice = Number(input.replace(/,/g, ""));
+    
     //? 인풋 값이 비워지면 price를 0으로 변경
     if (!numberPrice || numberPrice === 0) {
       dispatch(registerRoomActions.setPrice(0));
