@@ -22,12 +22,13 @@ export default async (req:NextApiRequest,res:NextApiResponse)=>{
                 })
 
                 let file = files.file as formidable.File
+                let fileName = file.originalFilename as string;
                 const stream = createReadStream(file.filepath)
-
+                console.log(file.originalFilename)
                 //* 파일이름
-                const originalFileName = file.newFilename.split(".").shift();
+                const originalFileName = fileName.split(".").shift();
                 //* 확장자
-                const fileExtension = file.newFilename.split(".").pop();
+                const fileExtension = fileName.split(".").pop();
                 
                 await s3 
                     .upload({

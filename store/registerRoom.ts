@@ -76,7 +76,11 @@ const initialState:RegisterRoomState = {
   // 편의공간
   conveniences:[],
   // 숙소 이미지
-  photos:[],
+  photos:[
+    "https://jinh-bucket.s3.ap-northeast-2.amazonaws.com/%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0__576b3031-f072-494d-9f66-e473f69e5f3c.jpg",
+    "https://jinh-bucket.s3.ap-northeast-2.amazonaws.com/%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0__576b3031-f072-494d-9f66-e473f69e5f3c.jpg",
+    "https://jinh-bucket.s3.ap-northeast-2.amazonaws.com/%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0__576b3031-f072-494d-9f66-e473f69e5f3c.jpg"
+  ],
   // 숙소 설명
   description:"",
   // 숙소 제목

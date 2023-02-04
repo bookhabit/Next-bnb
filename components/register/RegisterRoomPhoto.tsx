@@ -6,6 +6,9 @@ import isEmpty from "lodash/isEmpty"
 import Button from '../common/Button';
 import UploadIcon from "../../public/static/svg/register/upload.svg"
 import { uploadFileAPI } from './../../lib/api/file';
+import { useDispatch } from 'react-redux';
+import { registerRoomActions } from './../../store/registerRoom';
+import RegisterRoomPhotoCardList from './RegisterRoomPhotoCardList';
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -53,17 +56,21 @@ const Container = styled.div`
 const RegisterRoomPhoto = () => {
     const photos = useSelector((state:any)=>state.registerRoom.photos)
 
+    const dispatch = useDispatch();
+
     // 이미지 업로드하기
     const uploadImage = async (event:React.ChangeEvent<HTMLInputElement>)=>{
         const {files} = event.target;
         if(files && files.length > 0){
             const file = files[0];
-            console.log(file)
             const formdata = new FormData();
             formdata.append("file",file)
             try{
-                await uploadFileAPI(formdata)
-                console.log('요청성공')
+                const {data} =  await uploadFileAPI(formdata)
+                if(data){
+                    dispatch(registerRoomActions.setPhotos([...photos,data]))
+                }
+
             }catch(e){
                 console.log(e)
             }
@@ -89,6 +96,7 @@ const RegisterRoomPhoto = () => {
                     </>
                 </div>
             )}
+            {!isEmpty(photos)&&<RegisterRoomPhotoCardList photos={photos}/>}
         </Container>
     );
 };
