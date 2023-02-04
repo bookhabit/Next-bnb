@@ -57,7 +57,8 @@ const RegisterRoomPhoto = () => {
     const uploadImage = async (event:React.ChangeEvent<HTMLInputElement>)=>{
         const {files} = event.target;
         if(files && files.length > 0){
-            const file= files[0];
+            const file = files[0];
+            console.log(file)
             const formdata = new FormData();
             formdata.append("file",file)
             try{

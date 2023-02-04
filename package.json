@@ -11,10 +11,14 @@
     "start": "next start"
   },
   "dependencies": {
+    "-": "^0.0.1",
     "@reduxjs/toolkit": "^1.9.1",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/lodash": "^4.14.191",
     "@types/react-redux": "^7.1.25",
+    "@types/uuid": "^9.0.0",
+    "D": "^1.0.0",
+    "aws-sdk": "^2.1309.0",
     "axios": "^1.2.2",
     "babel-plugin-inline-react-svg": "^2.0.1",
     "babel-plugin-styled-components": "^2.0.7",
@@ -31,7 +35,8 @@
     "react-redux": "^8.0.5",
     "redux": "^4.2.0",
     "styled-components": "^5.3.6",
-    "styled-reset": "^4.4.5"
+    "styled-reset": "^4.4.5",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
