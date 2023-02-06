@@ -25,10 +25,11 @@ type RegisterRoomState= {
     amentities:string[]; // 편의시설
     conveniences:string[]; // 편의공간
     photos:string[] // 숙소이미지
-
     description:string; // 숙소설명
     title:string; // 숙소 제목
     price:number; // 숙소 가격
+    startDate:string|null; // 예약시작날짜
+    endDate:string|null; // 예약 마지막날짜
 }
 
 // 초기상태
@@ -83,7 +84,10 @@ const initialState:RegisterRoomState = {
   title:"",
   // 숙소 가격
   price:0, 
-
+  // 예약 시작날짜
+  startDate:null,
+  // 예약 마감날짜
+  endDate:null,
 }
 
 const registerRoom = createSlice({
@@ -255,6 +259,14 @@ const registerRoom = createSlice({
         // 숙소 가격 변경하기
         setPrice(state,action:PayloadAction<number>){
             state.price = action.payload;
+        },
+        // 예약 시작날짜 변경하기
+        setStartDate(state,action:PayloadAction<string|null>){
+            state.startDate = action.payload;
+        },
+        // 예약 마감날짜 변경하기
+        setEndDate(state,action:PayloadAction<string|null>){
+            state.endDate = action.payload;
         }
     }
 })

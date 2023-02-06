@@ -116,13 +116,21 @@ const Container = styled.div`
   }
 `;
 
-const DatePicker: React.FC<ReactDatePickerProps> = ({...props }) => {
+const DatePicker: React.FC<ReactDatePickerProps> = ({onChange,...props }) => {
   return (
     <Container>
       <ReactDatePicker
         {...props}
         disabledKeyboardNavigation
         locale={ko}
+        dateFormat="MM월 dd일"
+        onChange={(date,event)=>{
+            if(date){
+                onChange(addHours(date as Date, 9 ), event);
+            }else{
+                onChange(null,event)
+            }
+        }}
       />
     </Container>
   );
