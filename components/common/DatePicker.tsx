@@ -5,6 +5,8 @@ import addHours from "date-fns/addHours";
 import ReactDatePicker, { ReactDatePickerProps } from "react-datepicker";
 import palette from "../../styles/palette";
 import "react-datepicker/dist/react-datepicker.css";
+import { useEffect } from "react";
+import useValidateMode from "../../hooks/useValidateMode";
 
 const Container = styled.div`
   width: 100%;
@@ -116,7 +118,21 @@ const Container = styled.div`
   }
 `;
 
-const DatePicker: React.FC<ReactDatePickerProps> = ({onChange,...props }) => {
+
+const DatePicker: React.FC<ReactDatePickerProps> = ({onChange,validateMode,...props }) => {
+    if(validateMode){
+        alert('날짜를 설정해주세요.')
+        // isValid로 UI 변경하기
+    }
+
+    const {setValidateMode}=useValidateMode();
+
+    useEffect(() => {
+      return () => {
+        setValidateMode(false);
+      };
+    }, []);
+
   return (
     <Container>
       <ReactDatePicker
