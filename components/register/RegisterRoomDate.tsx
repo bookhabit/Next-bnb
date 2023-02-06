@@ -113,7 +113,6 @@ const RegisterRoomDate:React.FC = () => {
                   </label>
               </div>
             </div>
-            <h2>'test'</h2>
             <RegisterRoomFooter
               prevHref='/room/register/price'
               nextHref='/room/register/checklist'
