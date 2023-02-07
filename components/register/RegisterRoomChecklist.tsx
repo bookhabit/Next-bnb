@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
 import { isEmpty } from 'lodash';
 import RegisterRoomCheckStep from './RegisterRoomCheckStep';
+import RegisterRoomFooter from './RegisterRoomFooter';
+import RegisterRoomSubmitFooter from './RegisterRoomSubmitFooter';
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -20,19 +22,24 @@ const Container = styled.div`
 const RegisterRoomChecklist:React.FC = () => {
     const registerRoom = useSelector((state:any)=>state.registerRoom)
     
-    // 숙소 유형이 활성화됐는지
-    const isBuildingTypeActived = ()=>{
+      //* 숙소 유형이 활성화 됬는지
+    const isBuildingTypeActived = useMemo(() => {
         const {
-            largeBuildingType,
-            buildingType,
-            roomType,
-            isSetUpForGuest,
+        largeBuildingType,
+        buildingType,
+        roomType,
+        isSetUpForGuest,
         } = registerRoom;
-        if(!largeBuildingType || !buildingType || !roomType || !isSetUpForGuest ){
-            return false;
+        if (
+        !largeBuildingType ||
+        !buildingType ||
+        !roomType ||
+        isSetUpForGuest === null
+        ) {
+        return false;
         }
         return true;
-    }
+    }, []);
 
     // 침대유형 활성화됐는지
     const isRoomTypeActived = useMemo(()=>{
@@ -144,10 +151,10 @@ const RegisterRoomChecklist:React.FC = () => {
 
   //* 예약 날짜가 채워져 있는지
   const isDateActived = useMemo(() => {
-    const { startDate, endDate } = registerRoom;
-    if (!isPriceActived || !startDate || !endDate) {
-      return false;
-    }
+    // const { startDate, endDate } = registerRoom;
+    // if (!isPriceActived || !startDate || !endDate) {
+    //   return false;
+    // }
     return true;
   }, []);
 
@@ -262,6 +269,15 @@ const RegisterRoomChecklist:React.FC = () => {
                     inProgress={stepInProgress === "date"}
                     />
             </ul>
+            {isDateActived?(
+                <RegisterRoomSubmitFooter/>
+            ):(
+                <RegisterRoomFooter
+                    prevHref='/room/register/date'
+                    nextHref={`/room/register/${stepInProgress}`}
+                    isValid={!!stepInProgress}
+                    />
+            )}  
         </Container>
     );
 };

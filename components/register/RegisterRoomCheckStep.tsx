@@ -51,7 +51,6 @@ const RegisterRoomCheckStep: React.FC<IProps> = ({
   step,
   href,
 }) => {
-  console.log(step,disabled,inProgress)
   if (inProgress) {
     return (
       <Container>
