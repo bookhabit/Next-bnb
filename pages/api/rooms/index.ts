@@ -12,8 +12,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       // 필요한 값이 전부 들어있는지 확인
       if(
         !largeBuildingType||!roomType||!isSetUpForGuest||!maximumGuestCount||!bedroomCount||!bedCount||!bedList||!publicBedList||!bathroomCount||!bathroomType
-        // ||!latitude||!longitude
-        ||!country||!city||!district||!streetAddress||!detailAddress||!postcode||!amentities||!conveniences||!photos||!description||!title||!price||!startDate||!endDate
+        ||!latitude||!longitude
+        ||!country||!city||!district||!streetAddress||!postcode||!amentities||!conveniences||!photos||!description||!title||!price||!startDate||!endDate
       ){
         res.statusCode=400;
         res.send("필수 값이 업습니다.")

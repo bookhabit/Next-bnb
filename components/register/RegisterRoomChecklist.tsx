@@ -80,8 +80,8 @@ const RegisterRoomChecklist:React.FC = () => {
     } = registerRoom;
     if (
       !isBathroomActived ||
-    //   !latitude ||
-    //   !longitude ||
+      !latitude ||
+      !longitude ||
       !country ||
       !city ||
       !district ||
@@ -151,10 +151,10 @@ const RegisterRoomChecklist:React.FC = () => {
 
   //* 예약 날짜가 채워져 있는지
   const isDateActived = useMemo(() => {
-    // const { startDate, endDate } = registerRoom;
-    // if (!isPriceActived || !startDate || !endDate) {
-    //   return false;
-    // }
+    const { startDate, endDate } = registerRoom;
+    if (!isPriceActived || !startDate || !endDate) {
+      return false;
+    }
     return true;
   }, []);
 
