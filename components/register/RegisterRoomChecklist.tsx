@@ -80,8 +80,8 @@ const RegisterRoomChecklist:React.FC = () => {
     } = registerRoom;
     if (
       !isBathroomActived ||
-      !latitude ||
-      !longitude ||
+    //   !latitude ||
+    //   !longitude ||
       !country ||
       !city ||
       !district ||

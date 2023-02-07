@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { registerRoomActions } from './../../store/registerRoom';
 import { useDispatch } from 'react-redux';
 import RegisterRoomFooter from './RegisterRoomFooter';
+import { getLocationInfoAPI } from './../../lib/api/map';
 
 const Container = styled.div`
   padding: 62px 30px 100px;
@@ -103,6 +104,28 @@ const RegisterRoomLocation = () => {
         dispatch(registerRoomActions.setPostcode(e.target.value));
     };
 
+    // 현재 위치 불러오기에 성공했을 때
+    const onSuccessGetLocation = async ({coords}:any)=>{
+      try{
+        const {data} = await getLocationInfoAPI({
+          latitude:coords.latitude,
+          longitude:coords.longitude,
+        })
+        console.log(data)
+      }catch(e){
+        console.log(e)
+        alert(e)
+      }
+    }
+
+    // 현재 위치 사용 버튼 클릭시 - 현재위치 불러옴
+    const onClickGetCurrentLocation = ()=>{
+      navigator.geolocation.getCurrentPosition(onSuccessGetLocation,(e)=>{
+        console.log(e)
+        alert(e?.message)
+      })
+    }
+    
     return (
         <Container>
             <h2>숙소의 위치를 알려주세요.</h2>
@@ -111,7 +134,9 @@ const RegisterRoomLocation = () => {
                 정확한 숙소 주소는 게스트가 예약을 완료한 후에만 공개됩니다.
             </p>
             <div className='register-room-location-button-wrapper'>
-                <Button color='dark_cyan' colorReverse icon={<NavigationIcon/>} >
+                <Button color='dark_cyan' colorReverse icon={<NavigationIcon/>} 
+                onClick={onClickGetCurrentLocation}
+                >
                     현재 위치 사용
                 </Button>
             </div>
