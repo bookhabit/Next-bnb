@@ -7,6 +7,7 @@ import palette from "../../styles/palette";
 import Button from "../common/Button";
 
 import { useSelector } from "../../store";
+import { registerRoomAPI } from './../../lib/api/room';
 
 const Container = styled.footer`
   position: fixed;
@@ -39,7 +40,18 @@ const RegisterRoomSubmitFooter: React.FC = () => {
   const router = useRouter();
 
   // 등록하기 클릭 시 
-  const onClickregisterRoom = async()=>{};
+  const onClickregisterRoom = async()=>{
+    const registerRoomBody = {
+      ...registerRoom,
+      hostId:userId,
+    }
+    try{
+      await registerRoomAPI(registerRoomBody);
+      router.push("/")
+    }catch(e){
+      console.log(e)
+    }
+  };
 
   return (
     <Container>

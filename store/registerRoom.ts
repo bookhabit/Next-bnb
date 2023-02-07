@@ -1,36 +1,6 @@
 import { createSlice,PayloadAction } from "@reduxjs/toolkit";
 import { BedType } from "../types/room";
-
-// 데이터 타입지정
-type RegisterRoomState= {
-    largeBuildingType:string|null; // 집종류
-    buildingType:string|null; // 건물 유형
-    roomType:string|null; // 숙소 유형
-    isSetUpForGuest:boolean|null; // 게스트용인지
-    maximumGuestCount:number; // 최대 숙박인원
-    bedroomCount: number; // 침실 개수
-    bedCount: number; // 침대 개수
-    bedList: { id: number; beds: { type: BedType; count: number }[] }[]; // 침대유형
-    publicBedList: { type: BedType; count: number }[]; // 공용공간 침대유형
-    bathroomCount:number;
-    bathroomType:"private"|"public"|null;
-    country:string;
-    city:string;
-    district:string;
-    streetAddress:string;
-    detailAddress:string;
-    postcode:string;
-    latitude:number;
-    longitude:number;
-    amentities:string[]; // 편의시설
-    conveniences:string[]; // 편의공간
-    photos:string[] // 숙소이미지
-    description:string; // 숙소설명
-    title:string; // 숙소 제목
-    price:number; // 숙소 가격
-    startDate:string|null; // 예약시작날짜
-    endDate:string|null; // 예약 마지막날짜
-}
+import { RegisterRoomState } from "../types/room";
 
 // 초기상태
 const initialState:RegisterRoomState = {
