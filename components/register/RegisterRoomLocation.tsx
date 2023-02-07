@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import palette from '../../styles/palette';
 import Button from '../common/Button';
@@ -72,6 +72,9 @@ const RegisterRoomLocation = () => {
     );
     const postcode = useSelector((state:any) => state.registerRoom.postcode);
 
+    //* 현재 주소 불러오기 로딩
+  const [loading, setLoading] = useState(false);
+
     const dispatch = useDispatch();
 
     //* 나라 변경시
@@ -107,11 +110,21 @@ const RegisterRoomLocation = () => {
     // 현재 위치 불러오기에 성공했을 때
     const onSuccessGetLocation = async ({coords}:any)=>{
       try{
-        const {data} = await getLocationInfoAPI({
+        const {data:currentLocation} = await getLocationInfoAPI({
           latitude:coords.latitude,
           longitude:coords.longitude,
         })
-        console.log(data)
+        // 받아온 주소 위치 정보를 리덕스 스토어에 저장하기
+        dispatch(registerRoomActions.setCountry(currentLocation.country==="South Korea"?"대한민국":currentLocation.country));
+        dispatch(registerRoomActions.setCity(currentLocation.city));
+        dispatch(registerRoomActions.setDistrict(currentLocation.district));
+        dispatch(
+          registerRoomActions.setStreetAddress(currentLocation.streetAddress)
+        );
+        dispatch(registerRoomActions.setPostcode(currentLocation.postcode));
+        dispatch(registerRoomActions.setLatitude(currentLocation.latitude));
+        dispatch(registerRoomActions.setLongitude(currentLocation.longitude));
+        setLoading(false);
       }catch(e){
         console.log(e)
         alert(e)
@@ -120,6 +133,8 @@ const RegisterRoomLocation = () => {
 
     // 현재 위치 사용 버튼 클릭시 - 현재위치 불러옴
     const onClickGetCurrentLocation = ()=>{
+      setLoading(true)
+      // 현재 위치의 위도와 경도를 받아서 성공함수에 넘겨줌
       navigator.geolocation.getCurrentPosition(onSuccessGetLocation,(e)=>{
         console.log(e)
         alert(e?.message)
@@ -137,7 +152,7 @@ const RegisterRoomLocation = () => {
                 <Button color='dark_cyan' colorReverse icon={<NavigationIcon/>} 
                 onClick={onClickGetCurrentLocation}
                 >
-                    현재 위치 사용
+                    {loading?"불러오는 중":"현재 위치 사용"}
                 </Button>
             </div>
             <div className='register-room-location-country-selector-wrapper'>
@@ -175,10 +190,10 @@ const RegisterRoomLocation = () => {
                 <Input label="우편번호" value={postcode} onChange={onChangePostcode} 
                 useValidation={false}/>
             </div>
-            {/* 일단 푸터적용해서 다음단계 적용 */}
+            
             <RegisterRoomFooter 
                 prevHref='/room/register/bathroom'
-                nextHref='/room/register/amentities'
+                nextHref='/room/register/geometry'
                 isValid={true} // 일단 true로 설정해둠 이동할수있도록
                 />
         </Container>
