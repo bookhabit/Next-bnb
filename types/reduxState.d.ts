@@ -10,3 +10,16 @@ export type CommonState = {
 export type UserState = UserType & {
     idLogged:boolean;
 }
+
+//* 숙소 검색 redux state
+export type SearchRoomState = {
+    location: string;
+    latitude: number;
+    longitude: number;
+    checkInDate: string | null;
+    checkOutDate: string | null;
+    adultCount: number;
+    childrenCount: number;
+    infantsCount: number;
+  };
+  
