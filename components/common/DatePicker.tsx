@@ -140,6 +140,7 @@ const DatePicker: React.FC<ReactDatePickerProps> = ({onChange,validateMode,...pr
         disabledKeyboardNavigation
         locale={ko}
         dateFormat="MM월 dd일"
+        validateMode={validateMode}
         onChange={(date,event)=>{
             if(date){
                 onChange(addHours(date as Date, 9 ), event);

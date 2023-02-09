@@ -14,7 +14,7 @@ const Container = styled.div`
     font-size: 14px;
   }
   h2 {
-    width: 557px;
+    width: 600px;
     margin: 80px 0 60px;
     font-size: 50px;
     color: ${palette.cardinal};
@@ -25,7 +25,7 @@ const Home = () => {
         <Container>
             <p className='home-search-bar-label'>숙소</p>
             <SearchRoomBar/>
-            <h2>가까운 여행지 , 에어비앤비와 탐험해보세요.</h2>
+            <h2>가까운 여행지 ,<br/> 에어비앤비와 탐험해보세요.</h2>
         </Container>
     );
 };
