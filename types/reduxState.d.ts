@@ -23,3 +23,8 @@ export type SearchRoomState = {
     infantsCount: number;
   };
   
+
+// 숙소 redux state
+export type RoomState = {
+    rooms:RoomType[];
+}

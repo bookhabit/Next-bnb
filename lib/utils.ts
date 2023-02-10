@@ -38,7 +38,6 @@ export const makeQueryString = (
   baseUrl: string,
   queriesObject: Object & { [key: string]: any }
 ) => {
-  console.log(queriesObject)
   const keys = Object.keys(queriesObject);
   const values = Object.values(queriesObject);
   if (keys.length === 0) {

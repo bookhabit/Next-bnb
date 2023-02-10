@@ -41,11 +41,17 @@ const RegisterRoomSubmitFooter: React.FC = () => {
 
   // 등록하기 클릭 시 
   const onClickregisterRoom = async()=>{
+    // hostId를 추가해줌
     const registerRoomBody = {
       ...registerRoom,
       hostId:userId,
     }
     try{
+      // 로그인이 되어있지 않으면 api보내지 않음
+      if(userId === 0){
+        alert("로그인을 해주세요 ( SubmitFooter )")
+        return null;
+      }
       await registerRoomAPI(registerRoomBody);
       router.push("/")
     }catch(e){

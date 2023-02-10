@@ -9,7 +9,7 @@ const SearchRoomButton: React.FC = () => {
   const searchRoom = useSelector((state:any)=>state.searchRoom)
 
   const roomListHref = makeQueryString("/room",searchRoom)
-  console.log(roomListHref)
+  console.log('roomListHref',roomListHref)
   return (
     <Link href={roomListHref}>
         <Button icon={<SearchIcon />} color="amaranth" width="100px">
