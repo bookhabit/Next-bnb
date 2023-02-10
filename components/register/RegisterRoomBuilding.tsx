@@ -74,6 +74,10 @@ const isSetUpForGuestOptions = [
 ];
 
 const RegisterRoomBuilding: React.FC = () => {
+  const user = useSelector((state:any)=>state.user)
+
+  // 로그인이 되어있지 않으면 로그인페이지로 이동시키기
+
   const largeBuildingType = useSelector(
     (state:any) => state.registerRoom.largeBuildingType
   );
@@ -178,7 +182,9 @@ const RegisterRoomBuilding: React.FC = () => {
 
   return (
     <Container>
-      <h2>등록하실 숙소 종류는 무엇인가요?</h2>
+      {!user.isLogged ? <h2>로그인을 진행해주세요</h2> :(
+<>
+<h2>등록하실 숙소 종류는 무엇인가요?</h2>
       <h3>1단계</h3>
       <div className="register-room-building-selector-wrapper">
         <Selector
@@ -230,6 +236,9 @@ const RegisterRoomBuilding: React.FC = () => {
         prevHref="/"
         nextHref="/room/register/bedrooms"
       />
+</>
+      )}
+      
     </Container>
   );
 };
