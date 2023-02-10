@@ -4,13 +4,21 @@ import { wrapper } from '../../store';
 import RoomMain from '../../components/room/main/RoomMain';
 import { getRoomListAPI } from '../../lib/api/room';
 import { roomActions } from './../../store/room';
+import { useDispatch } from 'react-redux';
 
-const index:NextPage = (query) => {
+
+
+const index:NextPage = ({...rooms}) => {
+    const clientRooms = Object(rooms).rooms;
+    
+    const dispatch = useDispatch();
+
+    dispatch(roomActions.setRooms(clientRooms))
+    
     return <RoomMain/>
 };
 
-index.getInitialProps = async ({store,query})=>{
-    console.log('store:',store)
+index.getInitialProps = async ({query})=>{
     const {
         checkInDate,
         checkOutDate,
@@ -22,6 +30,8 @@ index.getInitialProps = async ({store,query})=>{
         page = "1",
       } = query;
       
+      let rooms
+
       try {
         const { data } = await getRoomListAPI({
           checkInDate,
@@ -38,11 +48,11 @@ index.getInitialProps = async ({store,query})=>{
             : undefined,
         });
         console.log('숙소리스트 api로 가져온 숙소리스트',data)
-        store.dispatch(roomActions.setRooms(data));
+        rooms = data;
       } catch (e) {
         console.log(e);
       }
-      return {query}
+      return {rooms}
 }
 
 

@@ -1,4 +1,5 @@
 import UserType  from "./user";
+import { RoomType } from "./room";
 
 
 // 공통 redux state

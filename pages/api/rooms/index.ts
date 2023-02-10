@@ -24,7 +24,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         0 + (Number(page) - 1) * Number(limit),
         Number(limit)
       );
-      console.log('limitedRooms',limitedRooms)
+      
       //* host 정보 넣기
       const roomsWithHost = await Promise.all(
         limitedRooms.map(async (room) => {
@@ -32,7 +32,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
           return { ...room, host };
         })
       );
-      console.log('roomsWithHost',roomsWithHost)
+      
       res.statusCode = 200;
       return res.send(roomsWithHost);
     } catch (e) {
