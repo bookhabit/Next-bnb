@@ -105,7 +105,8 @@ const RoomMain: React.FC = () => {
         )}
       </div>
       <div className="room-list-wrapper">
-        <RoomList/>
+        {rooms ? <RoomList/> : <h2>해당 숙소 리스트가 없습니다.</h2>}
+        
       </div>
     </Container>
   );
