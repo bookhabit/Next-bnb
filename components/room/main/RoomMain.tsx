@@ -9,10 +9,16 @@ import RoomList from "./RoomList";
 
 const RoomListMap = dynamic(()=>import("./RoomListMap"),{ssr:false});
 
-const Container = styled.div`
+const Container = styled.div<{ showMap: boolean }>`
   padding: 50px 80px;
   margin: auto;
 
+  ${({ showMap }) =>
+    showMap &&
+    css`
+      width: 840px;
+      margin: 0;
+    `};
   .room-list-info {
     margin-bottom: 8px;
   }
@@ -85,7 +91,7 @@ const RoomMain: React.FC = () => {
   }`;
 
   return (
-    <Container>
+    <Container showMap={showMap}>
       <p className="room-list-info">{getRoomListInfo}</p>
       <h1 className="room-list-title">숙소</h1>
       <div className="room-list-buttons">
@@ -106,7 +112,7 @@ const RoomMain: React.FC = () => {
         )}
       </div>
       <div className="room-list-wrapper">
-        {rooms ? <RoomList/> : <h2>해당 숙소 리스트가 없습니다.</h2>}
+        {rooms ? <RoomList showMap={showMap} /> : <h2>해당 숙소 리스트가 없습니다.</h2>}
         {showMap && <RoomListMap showMap={showMap} setShowMap={setShowMap}/>}
       </div>
     </Container>
