@@ -7,6 +7,7 @@ import palette from "../../../styles/palette";
 import { useSelector } from "../../../store";
 import RoomList from "./RoomList";
 
+const RoomListMap = dynamic(()=>import("./RoomListMap"),{ssr:false});
 
 const Container = styled.div`
   padding: 50px 80px;
@@ -97,7 +98,7 @@ const RoomMain: React.FC = () => {
             type="button"
             className="room-list-show-map-button"
             onClick={() => {
-              
+              setShowMap(!showMap)
             }}
           >
             <MapIcon /> 지도 표시하기
@@ -106,7 +107,7 @@ const RoomMain: React.FC = () => {
       </div>
       <div className="room-list-wrapper">
         {rooms ? <RoomList/> : <h2>해당 숙소 리스트가 없습니다.</h2>}
-        
+        {showMap && <RoomListMap showMap={showMap} setShowMap={setShowMap}/>}
       </div>
     </Container>
   );
