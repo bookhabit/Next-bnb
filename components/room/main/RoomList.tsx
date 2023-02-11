@@ -23,7 +23,7 @@ const RoomList: React.FC<IProps> = ({showMap}) => {
   return (
     <Container showMap={showMap} >
       {rooms.map((room) => (
-        <RoomCard room={room} key={room.id} />
+        <RoomCard room={room} key={room.id} showMap={showMap} />
       ))}
     </Container>
   );

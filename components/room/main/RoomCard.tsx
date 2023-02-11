@@ -7,7 +7,7 @@ import palette from "../../../styles/palette";
 import { useSelector } from "../../../store";
 import { makeMoneyString } from "../../../lib/utils";
 
-const Container = styled.li`
+const Container = styled.li<{showMap:boolean}>`
   width: calc((100% - 48px) / 4);
   &:nth-child(4n) {
     margin-right: 0;
@@ -65,16 +65,79 @@ const Container = styled.li`
   .room-bed-bath-room-info {
     display: none;
   }
+  ${({showMap})=> showMap && 
+  css`
+    width: 100% !important ;
+    margin:0 ;
+    padding: 24px 0 ;
+    border-bottom:1px solid ${palette.gray_eb};
+    &:first-child{
+      padding-top:0;
+    }
+    
+    section{
+      display: flex;
+      .room-card-photo-wrapper{
+        width: 300px;
+        height: 200px;
+        margin-right: 16px;
+        margin-bottom: 0;
+        padding-bottom: 0px;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .room-card-info-texts{
+        position: relative;
+        flex-grow: 1;
+        height: 200px;
+      }
+      .room-card-room-info{
+        font-size: 14px;
+        margin-bottom: 13px;
+      }
+      .room-card-title{
+        font-size: 18px;
+        margin-bottom: 11px;
+      }
+      .room-card-text-divider{
+        width: 32px;
+        height: 1px;
+        margin-bottom: 10px;
+        background-color: ${palette.gray_dd};
+      }
+      .room-bed-bath-room-info{
+        display: block;
+        font-size: 14px;
+        color:${palette.gray_71};
+      }
+      .room-card-price{
+        position: absolute;
+        margin: 0;
+        right: 0;
+        bottom: 17px;
+      }
+      .room-card-total-price{
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        text-decoration: underline;
+      }
+    }
+    
+  
+  `
+}
 
 
 `;
 
 interface IProps {
   room: RoomType;
-  
+  showMap: boolean;
 }
 
-const RoomCard: React.FC<IProps> = ({ room }) => {
+const RoomCard: React.FC<IProps> = ({ room,showMap }) => {
+  console.log(showMap)
   const checkInDate = useSelector((state) => state.searchRoom.checkInDate);
   const checkOutDate = useSelector((state) => state.searchRoom.checkOutDate);
 
@@ -97,8 +160,9 @@ const RoomCard: React.FC<IProps> = ({ room }) => {
     }
   }, []);
   return (
-    <Container>
+    <Container showMap={showMap}>
       <Link href={`/room/${room.id}`}>
+        <section>
           <div className="room-card-photo-wrapper">
             <img src={room.photos[0]} alt="" />
           </div>
@@ -120,6 +184,7 @@ const RoomCard: React.FC<IProps> = ({ room }) => {
               </p>
             )}
           </div>
+          </section>
       </Link>
     </Container>
   );
