@@ -3,6 +3,7 @@ import { getRoomAPI } from "../../lib/api/room";
 import { roomActions } from "../../store/room";
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import RoomDetail from "../../components/room/detail/RoomDetail";
 
 const roomDetail:NextPage = (detail)=>{
     const detailRoom = Object(detail).detailRoom;
@@ -12,7 +13,7 @@ const roomDetail:NextPage = (detail)=>{
         dispatch(roomActions.setDetailRoom(detailRoom))
     },[])
     console.log(detailRoomState)
-    return <div/>;
+    return <RoomDetail/>;
 }
 
 roomDetail.getInitialProps = async ({query})=>{
