@@ -10,6 +10,7 @@ import DatePicker from "../../common/DatePicker";
 import Counter from "../../common/Counter";
 import Button from "../../common/Button";
 import AuthModal from "../../auth/AuthModal";
+import { makeReservationAPI } from './../../../lib/api/reservation';
 
 const Container = styled.div`
   position: sticky;
@@ -201,9 +202,10 @@ const RoomDetailReservation: React.FC = () => {
           childrenCount,
           infantsCount,
         };
-        // await makeReservationAPI(body);
-        // alert("숙소 등록을 완료하였습니다.");
-        // router.push("/");
+        await makeReservationAPI(body);
+        console.log()
+        alert("숙소 등록을 완료하였습니다.");
+        router.push("/");
       } catch (e) {
         console.log(e);
       }
