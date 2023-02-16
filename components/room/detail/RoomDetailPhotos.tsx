@@ -87,20 +87,9 @@ const RoomDetailPhotos = () => {
     if(photos.length === 1 ){
         return (
             <Container>
-                {/* <div className='room-detail-one-photo'>
-                    <img src={photos[0]} alt={roomTitle}/>
-                </div> */}
-                <div className='room-detail-photos-wrapper'>
-                <div className='room-detail-five-photos-first'>
+                <div className='room-detail-one-photo'>
                     <img src={photos[0]} alt={roomTitle}/>
                 </div>
-                <div className='room-detail-five-photos-second'>
-                    <img src={photos[0]} alt={roomTitle}/>
-                    <img src={photos[0]} alt={roomTitle}/>
-                    <img src={photos[0]} alt={roomTitle}/>
-                    <img src={photos[0]} alt={roomTitle}/>
-                </div>
-            </div>
             </Container>
         )
     }
