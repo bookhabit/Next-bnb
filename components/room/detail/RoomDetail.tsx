@@ -125,7 +125,8 @@ const RoomDetail = () => {
                 {room.district},{room.city},{room.country}
             </p>
             <RoomDetailPhotos/>
-            <section className="room-detail-contents">
+
+        <section className="room-detail-contents">
         <div className="room-detail-infos">
           <p className="room-detail-room-type">
             {room.host.lastname}님의 호스팅하는 {getTranslatedRoomType()}
