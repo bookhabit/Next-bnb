@@ -24,9 +24,22 @@ const find = (reservationdId:number)=>{
     return reservations.find((room)=>room.id===reservationdId)
 }
 
+// userId의 예약숙소상세페이지 불러오기
+const findReservedRoomList = (userId:number)=>{
+    const reservations = getList();
+    return reservations.filter((room)=>room.userId===userId)
+}
+
+
+// userId의 예약숙소상세페이지 불러오기
+const findReservedRoom = (userId:number)=>{
+    const reservations = getList();
+    return reservations.find((room)=>room.userId===userId)
+}
+
 // 예약 리스트 저장하기
 const write = (reservations:StoredReservation[])=>{
     writeFileSync("data/reservations.json",JSON.stringify(reservations))
 }
 
-export default {getList,exist,write,find}
+export default {getList,exist,write,find,findReservedRoom,findReservedRoomList}
