@@ -68,10 +68,10 @@ const ReservationRoomList:React.FC<IProps> = ({userId}) => {
                     <li className='reserved-room-column column-name'>
                         <p>이미지</p>
                         <p>침실</p>
-                        <p>욕실</p>
+                        <p>침대</p>
                         <p>위치</p>
-                        <p>체크인 날짜</p>
-                        <p>체크아웃날짜</p>
+                        <p>체크인 </p>
+                        <p>체크아웃</p>
                         <p>인원</p>
                         <p>가격</p>
                         <p>삭제</p>

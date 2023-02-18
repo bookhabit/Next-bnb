@@ -16,9 +16,9 @@ export type StoredReservation = {
 
 // 예약 숙소 리스트 타입
 export type ReservedRoomList = {
-    id?:number;
-    roomId?:number;
-    userId?:number;
+    id:number;
+    roomId:number;
+    userId:number;
     checkInDate:string;
     checkOutDate:string;
     adultCount:number;
@@ -27,8 +27,8 @@ export type ReservedRoomList = {
     createdAt:string;
     updatedAt:string;
     totalPrice:number;
-    roomType?: string | null;
-    photos?: string[];
-    bathroomCount?: number;
-    city?: string;
+    roomType: string | null;
+    photos: string[];
+    bedroomCount: number;
+    district: string;
 }

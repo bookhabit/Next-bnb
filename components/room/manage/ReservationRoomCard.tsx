@@ -5,20 +5,31 @@ import { ReservedRoomList } from '../../../types/reservation';
 import { makeMoneyString, changeDateFormat } from './../../../lib/utils';
 import palette from '../../../styles/palette';
 import trashIcon from "../../../public/static/svg/room/manage/trash.svg"
+import { useMemo } from 'react';
 
 const Container = styled.li`
         display:flex;
         justify-content:space-between;
+        align-items:center;
         font-size:18px;
         font-weight:400;
         text-align:center;
-        height:100px;
+        height:140px;
         border-bottom:1px solid #F2F2F2;
-        padding-top:30px;
         .remove-btn{
             cursor: pointer;
             color:${palette.gray_80};
         }
+        .img-wrapper{
+            width:80px;
+            height:80px;
+            overflow: hidden;
+            img {
+            width:100%;
+            height:100%;
+            }
+        }
+        
 `
 
 interface IProps {
@@ -34,12 +45,28 @@ const ReservationRoomCard:React.FC<IProps> = ({room}) => {
 
     const checkOutDate = new Date(room.checkOutDate).toLocaleDateString()
 
+      //* 한글로 된 숙소 유형
+    const translatedRoomType = useMemo(() => {
+        switch (room.roomType) {
+        case "entire":
+            return "집 전체";
+        case "private":
+            return "개인실";
+        case "public":
+            return "공용";
+        default:
+            return "";
+        }
+    }, []);
+
     return (
         <Container>
-                <p>이미지</p>
-                <p>침실</p>
-                <p>욕실</p>
-                <p>위치</p>
+                <p className='img-wrapper'>
+                    <img src={room.photos[0]} alt="" />
+                </p>
+                <p>{translatedRoomType}</p>
+                <p>{room.bedroomCount}</p>
+                <p>{room.district}</p>
                 <p>{changeDateFormat(checkInDate)}</p>
                 <p>{changeDateFormat(checkOutDate)}</p>
                 <p>{totalGuestCount}</p>
