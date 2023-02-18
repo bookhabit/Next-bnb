@@ -1,28 +1,23 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import palette from '../../../styles/palette';
-import { RoomType } from '../../../types/room';
 import ReservationRoomCard from './ReservationRoomCard';
 import axios from '../../../lib/api';
-import { getRoomAPI } from './../../../lib/api/room';
 import { useEffect } from 'react';
 import { GetReservedRoomAPI } from '../../../lib/api/reservation';
-import Data from '../../../lib/data';
 import { useState } from 'react';
 import { ReservedRoomList } from '../../../types/reservation';
 
 const Container = styled.div`
     padding:50px 80px;
     margin : auto;
-
     h1{
         font-size:20px;
         font-weight:800;
     }
 
     .reserved-room-wrapper{
-        width:80vw;
+        width:100%;
         margin-top:40px;
     }
 
@@ -36,6 +31,11 @@ const Container = styled.div`
         font-size:18px;
         color:${palette.dark_cyan}
     }
+    .reserved-room-list{
+        width:100%;
+        height:auto;
+    }
+    
 `
 interface IProps  {
     userId :number
@@ -70,13 +70,13 @@ const ReservationRoomList:React.FC<IProps> = ({userId}) => {
                         <p>침실</p>
                         <p>욕실</p>
                         <p>위치</p>
-                        <p>최종 수정일</p>
                         <p>체크인 날짜</p>
                         <p>체크아웃날짜</p>
                         <p>인원</p>
                         <p>가격</p>
+                        <p>삭제</p>
                     </li>
-                <ul>
+                <ul className='reserved-room-list'>
                     {loading ? 
                     <h2>데이터를 로딩중입니다</h2>   
                      :

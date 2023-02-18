@@ -27,4 +27,8 @@ export type ReservedRoomList = {
     createdAt:string;
     updatedAt:string;
     totalPrice:number;
+    roomType?: string | null;
+    photos?: string[];
+    bathroomCount?: number;
+    city?: string;
 }

@@ -61,6 +61,6 @@ export const changeDateFormat = (dateString:string)=>{
     const month = date[1]+'월 '
     const day = date[2]+'일'
 
-    const resultDate = year+month+day
+    const resultDate = month+day
     return resultDate
 }
