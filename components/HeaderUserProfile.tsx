@@ -5,7 +5,7 @@ import HambergerIcon from "../public/static/svg/hambergerIcon.svg";
 import { userActions } from "../store/user";
 import { useSelector } from "../store";
 import { logoutAPI } from "../lib/api/auth";
-
+import Link from "next/link";
 
 const HeaderUserProfile: React.FC = () => {
   //* 유저메뉴 열고,닫힘 여부
@@ -46,8 +46,12 @@ const HeaderUserProfile: React.FC = () => {
                 </button>
                 {isUsermenuOpened && (
                     <ul className="header-usermenu">
-                        <li>숙소 관리</li>
-                        <li>숙소 등록하기</li>
+                        <Link href="/room/manage">
+                            <li>숙소 관리</li>
+                        </Link>
+                        <Link href="/room/register/building">
+                            <li>숙소 등록하기</li>
+                        </Link>
                         <div className="header-usermenu-divider" />
                         <li role="presentation" onClick={logout}>
                             로그아웃
