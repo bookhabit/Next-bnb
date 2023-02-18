@@ -29,4 +29,12 @@ const write = (rooms: StoredRoomType[]) => {
   writeFileSync("data/rooms.json", JSON.stringify(rooms));
 };
 
-export default { getList, exist, write, find };
+// userId의 예약숙소리스트 불러오기
+const findReservedRoomList = (roomId:number)=>{
+  console.log('findReservedRoomList roomId',roomId)
+  const rooms = getList();
+  return rooms.filter((room)=>room.id===roomId)
+}
+
+
+export default { getList, exist, write, find,findReservedRoomList };

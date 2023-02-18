@@ -24,7 +24,7 @@ const find = (reservationdId:number)=>{
     return reservations.find((room)=>room.id===reservationdId)
 }
 
-// userId의 예약숙소상세페이지 불러오기
+// userId의 예약숙소리스트 불러오기
 const findReservedRoomList = (userId:number)=>{
     const reservations = getList();
     return reservations.filter((room)=>room.userId===userId)
