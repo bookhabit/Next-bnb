@@ -4,6 +4,10 @@ import styled from 'styled-components';
 import palette from '../../../styles/palette';
 import { RoomType } from '../../../types/room';
 import ReservationRoomCard from './ReservationRoomCard';
+import axios from '../../../lib/api';
+import { getRoomAPI } from './../../../lib/api/room';
+import { useEffect } from 'react';
+import { GetReservedRoomAPI } from '../../../lib/api/reservation';
 
 const Container = styled.div`
     padding:50px 80px;
@@ -30,13 +34,28 @@ const Container = styled.div`
         color:${palette.dark_cyan}
     }
 `
+interface IProps  {
+    userId :number
+}
 
-const ReservationRoomList:React.FC = () => {
-    const user = useSelector((state:any)=>state.user)
-    console.log(user)
+const ReservationRoomList:React.FC<IProps> = ({userId}) => {
+    // const user = useSelector((state:any)=>state.user)
+    // console.log(user.id)
     // userId를 가지고 예약리스트데이터에서 userId와 일치한 예약리스트 데이터 가져오기 api호출
-    const rooms = useSelector((state:any) => state.room.rooms);
-    console.log(rooms)
+    const testRooms = useSelector((state:any) => state.room.rooms);
+    
+    const getReservedRoom = async ()=>{
+        try{
+            const {data} = await GetReservedRoomAPI(userId)
+            console.log('응답받은 데이터',data)
+        }catch(e){
+            console.log(e)
+        }
+    }
+    useEffect(()=>{
+        getReservedRoom();
+    },[])
+
     return (
         <Container>
             <h1>예약된 숙소 몇 개</h1>
@@ -53,7 +72,7 @@ const ReservationRoomList:React.FC = () => {
                         <p>인원</p>
                         <p>가격</p>
                     </li>
-                    {rooms.map((room:RoomType)=>(
+                    {testRooms.map((room:RoomType)=>(
                         <ReservationRoomCard room={room} key={room.id}/>
                     ))}
                 </ul>
@@ -61,5 +80,6 @@ const ReservationRoomList:React.FC = () => {
         </Container>
     );
 };
+
 
 export default ReservationRoomList;

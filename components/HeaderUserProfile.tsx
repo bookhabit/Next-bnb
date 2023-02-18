@@ -11,8 +11,10 @@ const HeaderUserProfile: React.FC = () => {
   //* 유저메뉴 열고,닫힘 여부
   const [isUsermenuOpened, setIsUsermenuOpened] = useState(false);
   const userProfileImage = useSelector((state) => state.user.profileImage);
-  
+  const userId = useSelector((state) => state.user.id);
   const dispatch = useDispatch();
+
+  const manageURL = `/room/manage/${userId}`
 
   // 로그아웃 하기
   const logout = async ()=>{
@@ -46,7 +48,7 @@ const HeaderUserProfile: React.FC = () => {
                 </button>
                 {isUsermenuOpened && (
                     <ul className="header-usermenu">
-                        <Link href="/room/manage">
+                        <Link href={manageURL}>
                             <li>숙소 관리</li>
                         </Link>
                         <Link href="/room/register/building">
