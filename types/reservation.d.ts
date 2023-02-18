@@ -11,6 +11,7 @@ export type StoredReservation = {
     infantsCount:number;
     createdAt:string;
     updatedAt:string;
+    totalPrice:number;
 }
 
 // 예약 숙소 리스트 타입
@@ -25,4 +26,5 @@ export type ReservedRoomList = {
     infantsCount:number;
     createdAt?:string;
     updatedAt?:string;
+    totalPrice?:number;
 }

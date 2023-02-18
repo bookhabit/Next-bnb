@@ -14,6 +14,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         adultCount,
         childrenCount,
         infantsCount,
+        totalPrice
       } = req.body;
       if (
         !userId ||
@@ -21,7 +22,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         !checkOutDate ||
         adultCount === undefined ||
         childrenCount === undefined ||
-        infantsCount === undefined
+        infantsCount === undefined ||
+        totalPrice === undefined
       ) {
         res.statusCode = 400;
         return res.send("필수값이 없습니다.");

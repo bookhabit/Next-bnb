@@ -184,6 +184,9 @@ const RoomDetailReservation: React.FC = () => {
   const checkInRef = useRef<HTMLLabelElement>(null);
   const checkOutRef = useRef<HTMLLabelElement>(null);
 
+  
+  const totalPrice = Number(price) * differenceInDays(endDate, startDate)
+  
   const onClickReservation = async () => {
     if (!userId) {
       openModal();
@@ -201,6 +204,7 @@ const RoomDetailReservation: React.FC = () => {
           adultCount,
           childrenCount,
           infantsCount,
+          totalPrice
         };
         await makeReservationAPI(body);
         console.log()
@@ -232,8 +236,8 @@ const RoomDetailReservation: React.FC = () => {
                 startDate={startDate as Date}
                 endDate={new Date(endDate as Date)}
                 disabledKeyboardNavigation
-                minDate={new Date(room.startDate)}
-                maxDate={new Date(room.endDate)}
+                minDate={new Date()}
+                maxDate={new Date()}
               />
             </label>
           </div>
