@@ -19,12 +19,12 @@ export type ReservedRoomList = {
     id?:number;
     roomId?:number;
     userId?:number;
-    checkInDate?:string;
-    checkOutDate?:string;
+    checkInDate:string;
+    checkOutDate:string;
     adultCount:number;
     childrenCount:number;
     infantsCount:number;
-    createdAt?:string;
-    updatedAt?:string;
-    totalPrice?:number;
+    createdAt:string;
+    updatedAt:string;
+    totalPrice:number;
 }

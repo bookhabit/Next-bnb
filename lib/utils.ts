@@ -52,3 +52,15 @@ export const makeQueryString = (
   //* 마지막 '&' 제거하기
   return queryString.slice(0, -1);
 };
+
+
+// splice함수로 년,월,일로 날짜 포맷바꾸기
+export const changeDateFormat = (dateString:string)=>{
+    const date = dateString.split('.')
+    const year = date[0]+'년 '
+    const month = date[1]+'월 '
+    const day = date[2]+'일'
+
+    const resultDate = year+month+day
+    return resultDate
+}
